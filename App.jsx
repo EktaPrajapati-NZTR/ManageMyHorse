@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { BackHandler } from "react-native";
 import BottomTabNavigator from './src/navigation/BottomTabNavigator';
-import { NetworkProvider } from "./src/utils/NetworkProvider"; 
 
 const App = () => {
 
@@ -21,9 +20,7 @@ const App = () => {
   }, []);
 
   return (
-    <NetworkProvider>
       <BottomTabNavigator />
-    </NetworkProvider>
   );
 };
 

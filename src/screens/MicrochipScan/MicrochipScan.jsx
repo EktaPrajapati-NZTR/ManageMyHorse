@@ -12,14 +12,14 @@ import { RESULTS } from "react-native-permissions";
 import api from "../../utils/api";
 import URLConfig from "../../constants/UrlConstant";
 import { colors } from "../../constants/ColorConstant";
-import { useNetwork } from "../../utils/NetworkProvider";
+import { useNetwork } from "../../hooks/useNetwork";
 import usePermission from "../../hooks/usePermission";
 import useLocation from "../../hooks/useLocation";
 import { permission } from "../../utils/permissions";
 import "../../../global.css";
 
 const MicrochipScan = () => {
-  const { isInternetReachable, checkInternetReachable, appState } = useNetwork();
+  const { isInternetReachable, checkInternetReachable } = useNetwork();
   const inputRef = useRef(null);
   const [isPressed, setIsPressed] = useState(false);
   const navigation = useNavigation();

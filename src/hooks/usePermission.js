@@ -2,7 +2,7 @@ import {useState, useEffect, useCallback } from 'react';
 import {Alert, Linking} from 'react-native';
 import {request, check, RESULTS} from 'react-native-permissions';
 
-import { useNetwork } from "../utils/NetworkProvider";
+import { useNetwork } from "./useNetwork";
 
 const usePermission = permissionType => {
   const [permissionStatus, setPermissionStatus] = useState(null);

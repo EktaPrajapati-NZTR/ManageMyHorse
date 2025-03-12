@@ -4,15 +4,14 @@ import {
   Text,
   TouchableOpacity,
   ActivityIndicator,
-  ScrollView,
-  useWindowDimensions
+  ScrollView
 } from "react-native";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 
 import api from "../utils/api";
 import URLConfig from "../constants/UrlConstant";
 import { colors } from "../constants/ColorConstant";
-import { useNetwork } from "../utils/NetworkProvider";
+import { useNetwork } from "../hooks/useNetwork";
 import NoInternetScreen from "../utils/NoInternetScreen";
 
 const HorseDetail = ({ route }) => {
@@ -53,7 +52,7 @@ const HorseDetail = ({ route }) => {
     }, [microchipNumber])
   );
   
-  if (!isInternetReachable) {
+  if (isInternetReachable === false) {
     return <NoInternetScreen onRetry={isInternetReachable ? getHorseDetails : null} />;
   }
 
