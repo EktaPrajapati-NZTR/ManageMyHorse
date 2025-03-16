@@ -1,6 +1,7 @@
 import React from "react";
-import { Platform } from "react-native";
+import { TouchableOpacity, Platform } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 import ScanInstruction from "../screens/MicrochipScan/ScanInstruction";
 import MicrochipScan from "../screens/MicrochipScan/MicrochipScan";
@@ -27,11 +28,29 @@ const ScanStackNavigator = () => {
         options={{ headerTitle: "Scan Instruction" }} 
       />
 
-      {/* Second screen - Microchip Scan (Back arrow will appear automatically) */}
+      {/* Second screen - Microchip Scan */}
       <Stack.Screen 
         name="MicrochipScan" 
         component={MicrochipScan} 
-        options={{ headerTitle: "Microchip Scan" }} 
+        options={({ route, navigation }) => ({
+          headerTitle: route.params?.fromScanInstruction ? null : "Microchip Scan",
+          headerBackTitle: '', // Hide the back button label,
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => navigation.reset({
+              index: 0,  // Resets the navigation stack to just the 'ScanInstruction' screen
+              routes: [{ name: 'ScanInstruction' }]  // Navigates to 'ScanInstruction'
+            })}>
+              <Ionicons 
+                  name="arrow-back" 
+                  size={24} 
+                  color="white" 
+                  style={{ 
+                      marginLeft: 15,
+                      marginRight: 15
+                  }} />
+            </TouchableOpacity>
+          ),
+        })}
       />
 
     </Stack.Navigator>

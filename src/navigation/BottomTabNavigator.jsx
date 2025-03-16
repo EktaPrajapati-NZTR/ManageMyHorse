@@ -47,7 +47,7 @@ const BottomTabNavigator = () => {
               // Prevent default behavior of navigating to the first screen in the stack (ScanInstruction)
               e.preventDefault();
               // Manually navigate to the MicrochipScan screen in the stack
-              navigation.navigate('Scan', { screen: 'MicrochipScan' });
+              navigation.navigate('Scan', { screen: 'MicrochipScan', params: { fromScanInstruction: true } });
             },
           })}
         />
