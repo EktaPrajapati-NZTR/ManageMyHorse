@@ -87,7 +87,7 @@ const MicrochipScan = () => {
 
   // Helper function to validate input and restrict to numeric values
   const checkValidation = (text) => {
-    const numericText = text.replace(/[^0-9]/g, "").slice(0, 15);
+    const numericText = text.replace(/[^0-9]/g, "");
     setInputValue(numericText);
   };
 
@@ -261,7 +261,9 @@ const MicrochipScan = () => {
               className="border border-gray-300 rounded-lg px-4 py-2 text-lg text-black w-full"
               placeholder="Please tap here to focus before scanning"
               ref={inputRef}
-              keyboardType="numeric"
+              keyboardType="number-pad"
+              returnKeyType="done"
+              maxLength={15}
               placeholderTextColor="gray"
               autoFocus={true}
               value={inputValue}
