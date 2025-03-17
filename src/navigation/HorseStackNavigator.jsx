@@ -1,7 +1,7 @@
 import React from "react";
 import { TouchableOpacity, Platform } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import Entypo from "react-native-vector-icons/Entypo";
 
 import HorseDetail from "../screens/HorseDetail";
 
@@ -27,9 +27,9 @@ const HorseStackNavigator = () => (
         headerTitle: "Horse Details",
         headerLeft: () => (
           <TouchableOpacity onPress={() => navigation.navigate("Scan", { screen: "MicrochipScan" })}>
-            <Ionicons 
-                name="arrow-back" 
-                size={24} 
+            <Entypo
+                name="chevron-left" 
+                size={26} 
                 color="white" 
                 style={{ 
                     marginLeft: 15,

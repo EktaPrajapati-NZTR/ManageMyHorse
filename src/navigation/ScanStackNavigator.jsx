@@ -1,7 +1,7 @@
 import React from "react";
 import { TouchableOpacity, Platform } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import Entypo from "react-native-vector-icons/Entypo";
 
 import ScanInstruction from "../screens/MicrochipScan/ScanInstruction";
 import MicrochipScan from "../screens/MicrochipScan/MicrochipScan";
@@ -40,9 +40,9 @@ const ScanStackNavigator = () => {
               index: 0,  // Resets the navigation stack to just the 'ScanInstruction' screen
               routes: [{ name: 'ScanInstruction' }]  // Navigates to 'ScanInstruction'
             })}>
-              <Ionicons 
-                  name="arrow-back" 
-                  size={24} 
+              <Entypo 
+                  name="chevron-left" 
+                  size={26} 
                   color="white" 
                   style={{ 
                       marginLeft: 15,
