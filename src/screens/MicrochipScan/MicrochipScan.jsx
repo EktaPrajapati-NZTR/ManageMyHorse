@@ -277,7 +277,7 @@ const MicrochipScan = () => {
                 paddingBottom: Platform.OS === "ios" ? 10 : undefined,
               }}
             />
-           <View className="w-full pt-1">
+           <View className="w-full">
               <Text className="text-[14x] font-semibold text-wrap">Please keep enable location service to scan the microchip.</Text>
            </View>
             {scannedMicrochips.length > 0 && (
