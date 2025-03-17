@@ -1,11 +1,7 @@
 import { useState, useEffect } from "react";
 import Geolocation from "react-native-geolocation-service";
 
-import usePermission from "../hooks/usePermission";
-import { permission } from "../utils/permissions";
-
 const useLocation = () => {
-  // const {permissionStatus} = usePermission(permission.location);
   const [location, setLocation] = useState(null);
 
   // Function to get the current location
