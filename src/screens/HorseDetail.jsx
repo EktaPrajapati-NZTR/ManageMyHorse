@@ -71,7 +71,7 @@ const HorseDetail = ({ route }) => {
               <View className="bg-gray-100 p-4 rounded-lg">
                 <Text className="text-base font-semibold p-2">Age year: {horseData.ageYear}</Text>
                 <Text className="text-base font-semibold p-2">Sex at Birth: {horseData.sexAtBirth}</Text>
-                <Text className="text-base font-semibold p-2">Owner: {horseData.ownerName}</Text>
+                <Text className="text-base font-semibold p-2">Owner: {horseData.owner}</Text>
                 <Text className="text-base font-semibold p-2">
                   Last Location: {horseData.latitude ? `${horseData.latitude.toFixed(4)}, ${horseData.longitude?.toFixed(4)}` : ""}
                 </Text>
