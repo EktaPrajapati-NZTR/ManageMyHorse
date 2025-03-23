@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { View, Text, TextInput, ActivityIndicator, TouchableOpacity, 
-  ScrollView, Alert, useWindowDimensions, Platform } from "react-native";
+  ScrollView, Alert, useWindowDimensions, Platform, KeyboardAvoidingView } from "react-native";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from "react-native-vector-icons/FontAwesome";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -248,108 +248,114 @@ const MicrochipScan = () => {
   // }, [scannedMicrochips]);
 
   return (
-    <SafeAreaView className="flex-1 bg-white" edges={["left","right"]}>
-      <View className="flex-1 px-5 pt-2">
-        {isLoading ? (
-          <View className="absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center bg-opacity-50 z-20">
-            <ActivityIndicator size="large" color={colors.theme.brown} />
-          </View>
-        ) : (
-          <>
-            {/* Input for Scanned Microchip */}
-            <TextInput
-              className="border border-gray-300 rounded-lg px-4 py-2 text-lg text-black w-full"
-              placeholder="Please tap here to focus before scanning"
-              ref={inputRef}
-              keyboardType="number-pad"
-              returnKeyType="done"
-              maxLength={15}
-              placeholderTextColor="gray"
-              autoFocus={true}
-              value={inputValue}
-              onChangeText={checkValidation}
-              onSubmitEditing={(event) => {
-                  let data = event.nativeEvent.text.trim();
-                  handleScan(data);
-              }}
-              style={{
-                paddingTop: Platform.OS === "ios" ? 0 : undefined,
-                paddingBottom: Platform.OS === "ios" ? 10 : undefined,
-              }}
-            />
-           <View className="w-full">
-              <Text className="text-[14x] font-semibold text-wrap">Please keep enable location service to scan the microchip.</Text>
-           </View>
-            {scannedMicrochips.length > 0 && (
-              <View className={`flex-1 mt-2 mb-2 border border-gray-300 rounded-lg p-2 ${isLandscape ? "h-48" : "h-80"}`}>
-                <ScrollView showsVerticalScrollIndicator={true}>
-                  {scannedMicrochips.map((chip, index) => (
-                    <View key={index} className="flex-row items-center bg-gray-100 rounded-lg p-3 my-1">
-                      <Text className="text-black text-lg flex-1">{chip.microchipNumber}</Text>
-                      <View className="flex-row item-centre">
-                        {chip.isRegistered !== undefined && chip.isRegistered !== null && (
-                          chip.isRegistered ? (
-                            <View>
-                              <Tooltip
-                                isVisible={showTipCheck}
-                                content={<Text>Registered horse</Text>}
-                                placement="top"
-                                onClose={() => setTipCheck(false)}
-                              >
-                                <TouchableOpacity onPress={() => setTipCheck(true)} className="mx-3">
-                                    <Icon name="check-circle" size={20} color="green" />
-                                  </TouchableOpacity>
-                              </Tooltip>
-                            </View>
-                          ) : (
-                            <View>
-                              <Tooltip
-                                isVisible={showTipCross}
-                                content={<Text>Unregistered horse</Text>}
-                                placement="top"
-                                onClose={() => setTipCross(false)}
-                              >
-                                <TouchableOpacity onPress={() => setTipCross(true)} className="mx-3">
-                                    <Ionicons name="close-circle" size={20} color="red" />
-                              </TouchableOpacity>
-                              </Tooltip>
-                          </View>
-                          )
-                        )}
-                        <TouchableOpacity onPress={() => handleInfoPress(chip.microchipNumber)} disabled={isPressed} className="mx-3">
-                          <Icon name="info-circle" size={20} color={colors.theme.brown} />
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => handleDelete(index)} className="mx-3">
-                          <Icon name="trash" size={20} />
-                        </TouchableOpacity>
-                      </View>
-                    </View>
-                  ))}
-                </ScrollView>
-              </View>
-            )}
-
-            <View className={`flex-row justify-between mt-auto mb-2 gap-2 ${isLandscape ? "flex-wrap" : ""}`}>
-              <TouchableOpacity
-                className={`rounded-full py-3 flex-1 min-w-[150px] items-center ${isLoading || scannedMicrochips.length == 0 ? "bg-gray-400" : "bg-brown"}`}
-                disabled={isLoading || scannedMicrochips.length == 0}
-                onPress={() => {isInternetReachable ? saveHorseDetails(null) : saveScannedMicrochipsToAsyncStorage()}}
-              >
-                <Text className="text-white text-lg">{isInternetReachable ? "Save" : "Save for Later"}</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                className={`rounded-full py-3 flex-1 min-w-[150px] items-center ${isLoading || scannedMicrochips.length == 0 ? "bg-gray-400" : "border border-brown text-brown"}`}
-                disabled={isLoading || scannedMicrochips.length == 0}
-                onPress={clearMicrochips}
-              >
-                <Text className={`${isLoading || scannedMicrochips.length == 0 ? "text-white" : "text-brown"} text-lg`}>Clear</Text>
-              </TouchableOpacity>
+    <KeyboardAvoidingView 
+      behavior={Platform.OS === "ios" ? "padding" : undefined} 
+      keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 0}
+      className="flex-1"
+    >
+      <SafeAreaView className="flex-1 bg-white" edges={["left","right"]}>
+        <View className="flex-1 px-5 pt-2">
+          {isLoading ? (
+            <View className="absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center bg-opacity-50 z-20">
+              <ActivityIndicator size="large" color={colors.theme.brown} />
             </View>
-          </>
-        )}
-      </View>
-    </SafeAreaView>
+          ) : (
+            <>
+              {/* Input for Scanned Microchip */}
+              <TextInput
+                className="border border-gray-300 rounded-lg px-4 text-lg text-black w-full"
+                placeholder="Please tap here to focus before scanning"
+                ref={inputRef}
+                keyboardType="number-pad"
+                returnKeyType="done"
+                maxLength={15}
+                placeholderTextColor="gray"
+                autoFocus={true}
+                value={inputValue}
+                onChangeText={checkValidation}
+                onSubmitEditing={(event) => {
+                    let data = event.nativeEvent.text.trim();
+                    handleScan(data);
+                }}
+                style={{
+                  height: 40,
+                  lineHeight: 20,
+                  }}
+              />
+            <View className="w-full">
+                <Text className="text-[14x] font-semibold text-wrap">Please keep enable location service to scan the microchip.</Text>
+            </View>
+              {scannedMicrochips.length > 0 && (
+                <View className={`flex-1 mt-2 mb-2 border border-gray-300 rounded-lg p-2 ${isLandscape ? "h-48" : "h-80"}`}>
+                  <ScrollView showsVerticalScrollIndicator={true}>
+                    {scannedMicrochips.map((chip, index) => (
+                      <View key={index} className="flex-row items-center bg-gray-100 rounded-lg p-3 my-1">
+                        <Text className="text-black text-lg flex-1">{chip.microchipNumber}</Text>
+                        <View className="flex-row item-centre">
+                          {chip.isRegistered !== undefined && chip.isRegistered !== null && (
+                            chip.isRegistered ? (
+                              <View>
+                                <Tooltip
+                                  isVisible={showTipCheck}
+                                  content={<Text>Registered horse</Text>}
+                                  placement="top"
+                                  onClose={() => setTipCheck(false)}
+                                >
+                                  <TouchableOpacity onPress={() => setTipCheck(true)} className="mx-3">
+                                      <Icon name="check-circle" size={20} color="green" />
+                                    </TouchableOpacity>
+                                </Tooltip>
+                              </View>
+                            ) : (
+                              <View>
+                                <Tooltip
+                                  isVisible={showTipCross}
+                                  content={<Text>Unregistered horse</Text>}
+                                  placement="top"
+                                  onClose={() => setTipCross(false)}
+                                >
+                                  <TouchableOpacity onPress={() => setTipCross(true)} className="mx-3">
+                                      <Ionicons name="close-circle" size={20} color="red" />
+                                </TouchableOpacity>
+                                </Tooltip>
+                            </View>
+                            )
+                          )}
+                          <TouchableOpacity onPress={() => handleInfoPress(chip.microchipNumber)} disabled={isPressed} className="mx-3">
+                            <Icon name="info-circle" size={20} color={colors.theme.brown} />
+                          </TouchableOpacity>
+                          <TouchableOpacity onPress={() => handleDelete(index)} className="mx-3">
+                            <Icon name="trash" size={20} />
+                          </TouchableOpacity>
+                        </View>
+                      </View>
+                    ))}
+                  </ScrollView>
+                </View>
+              )}
+
+              <View className={`flex-row justify-between mt-auto mb-2 gap-2 ${isLandscape ? "flex-wrap" : ""}`}>
+                <TouchableOpacity
+                  className={`rounded-full py-3 flex-1 min-w-[150px] items-center ${isLoading || scannedMicrochips.length == 0 ? "bg-gray-400" : "bg-brown"}`}
+                  disabled={isLoading || scannedMicrochips.length == 0}
+                  onPress={() => {isInternetReachable ? saveHorseDetails(null) : saveScannedMicrochipsToAsyncStorage()}}
+                >
+                  <Text className="text-white text-lg">{isInternetReachable ? "Save" : "Save for Later"}</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  className={`rounded-full py-3 flex-1 min-w-[150px] items-center ${isLoading || scannedMicrochips.length == 0 ? "bg-gray-400" : "border border-brown text-brown"}`}
+                  disabled={isLoading || scannedMicrochips.length == 0}
+                  onPress={clearMicrochips}
+                >
+                  <Text className={`${isLoading || scannedMicrochips.length == 0 ? "text-white" : "text-brown"} text-lg`}>Clear</Text>
+                </TouchableOpacity>
+              </View>
+            </>
+          )}
+        </View>
+      </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 };
 
