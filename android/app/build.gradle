@@ -80,7 +80,7 @@ android {
 
     namespace "com.managemyhorse"
     defaultConfig {
-        applicationId "com.lovetracing"
+        applicationId "com.idmytb"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
