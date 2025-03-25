@@ -78,9 +78,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace "com.managemyhorse"
+    namespace "nz.co.nztr.IDmyTB.app"
     defaultConfig {
-        applicationId "com.idmytb"
+        applicationId "nz.co.nztr.IDmyTB.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

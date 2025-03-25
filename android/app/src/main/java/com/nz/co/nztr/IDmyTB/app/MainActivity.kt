@@ -1,4 +1,4 @@
-package com.managemyhorse
+package nz.co.nztr.IDmyTB.app
 
 import android.os.Bundle
 import com.facebook.react.ReactActivity
