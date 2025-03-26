@@ -23,7 +23,9 @@ const usePermission = permissionType => {
   const checkPermissionStatus = useCallback(async () => {
     try {
       const status = await check(permissionType);
-      setPermissionStatus(status);
+      if (status !== permissionStatus) { // Prevent unnecessary updates
+        setPermissionStatus(status);
+      }
     } catch (error) {
       console.error('Error checking permission:', error);
     }
@@ -46,20 +48,20 @@ const usePermission = permissionType => {
   const handleBlockedPermission = () => {
     Alert.alert(
       'Permission Blocked',
-      'You have blocked this permission. Please go to settings and enable it to use this feature.',
+      'You have blocked location permission. Please go to settings and enable it to scan the microchip(s).',
       [
         {
-          text: 'Cancel',
+          text: 'Ok',
           onPress: () => {
             // setPermissionStatus(null);
           },
         },
-        {
-          text: 'Go to settings',
-          onPress: () => {
-            Linking.openSettings();
-          },
-        },
+        // {
+        //   text: 'Go to settings',
+        //   onPress: () => {
+        //     Linking.openSettings();
+        //   },
+        // },
       ],
       {cancelable: false},
     );
