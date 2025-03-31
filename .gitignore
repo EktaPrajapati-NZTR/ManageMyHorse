@@ -18,6 +18,7 @@ android/app/intermediates/
 android/.gradle/
 android/app/.cxx/
 android/.idea/
+android/app/src/main/res/drawable-mdpi/node_modules_*
 
 # iOS
 ios/Pods/
