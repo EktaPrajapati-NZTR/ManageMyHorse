@@ -17,6 +17,7 @@ android/app/outputs/
 android/app/intermediates/
 android/.gradle/
 android/app/.cxx/
+android/.idea/
 
 # iOS
 ios/Pods/
