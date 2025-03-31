@@ -31,7 +31,6 @@ ios/.DS_Store
 *.xcworkspace/
 *.xcworkspacedata
 xcuserdata/
-.xcode.env.local
 
 # macOS
 .DS_Store
@@ -48,6 +47,7 @@ yarn-error.log
 .env
 .env.local
 .env.*.local
+.xcode.env.local
 
 # Android Studio files
 .android/
