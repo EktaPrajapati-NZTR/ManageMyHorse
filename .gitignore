@@ -24,6 +24,14 @@ android/app/src/main/res/drawable-mdpi/node_modules_*
 ios/Pods/
 /ios/Podfile.lock
 ios/build/
+ios/.DS_Store
+
+# Ignore Xcode specific files
+*.xcuserstate
+*.xcworkspace/
+*.xcworkspacedata
+xcuserdata/
+.xcode.env.local
 
 # macOS
 .DS_Store
@@ -38,6 +46,8 @@ yarn-error.log
 
 # Environment variables
 .env
+.env.local
+.env.*.local
 
 # Android Studio files
 .android/
