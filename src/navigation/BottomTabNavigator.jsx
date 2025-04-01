@@ -10,6 +10,7 @@ import HorseStackNavigator from "./HorseStackNavigator";
 import MapView from "../screens/MapView";
 import Settings from "../screens/Settings";
 import ScanStackNavigator from "./ScanStackNavigator";
+import { colors } from "../constants/ColorConstant"
 
 // Create Bottom Tab Navigator
 const Tab = createBottomTabNavigator();
@@ -35,8 +36,8 @@ const BottomTabNavigator = () => {
               ) : (
                 <IconComponent name={icon} size={size} color={color} />
               ),
-            tabBarActiveTintColor: "#A07C52",
-            tabBarInactiveTintColor: "gray",
+            tabBarActiveTintColor: colors.theme.green,
+            tabBarInactiveTintColor: colors.theme.silver,
           };
         }}
       >

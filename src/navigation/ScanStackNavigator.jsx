@@ -5,6 +5,7 @@ import Entypo from "react-native-vector-icons/Entypo";
 
 import ScanInstruction from "../screens/MicrochipScan/ScanInstruction";
 import MicrochipScan from "../screens/MicrochipScan/MicrochipScan";
+import { colors } from "../constants/ColorConstant"
 
 const Stack = createStackNavigator();
 
@@ -12,10 +13,10 @@ const ScanStackNavigator = () => {
   return (
     <Stack.Navigator 
       screenOptions={{ 
-        headerStyle: { backgroundColor: '#A07C52',
+        headerStyle: { backgroundColor: colors.theme.silver,
           height: Platform.OS === 'ios' ? 100 : 50
             },
-          headerTintColor: 'white',
+          headerTintColor: colors.theme.white,
           headerTitleStyle: {
             fontSize: 20,
         }
@@ -43,7 +44,7 @@ const ScanStackNavigator = () => {
               <Entypo 
                   name="chevron-left" 
                   size={26} 
-                  color="white" 
+                  color={colors.theme.white}
                   style={{ 
                       marginLeft: 15,
                       marginRight: 15

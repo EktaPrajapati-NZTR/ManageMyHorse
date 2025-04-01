@@ -257,7 +257,7 @@ const MicrochipScan = () => {
         <View className="flex-1 px-5 pt-2">
           {isLoading ? (
             <View className="absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center bg-opacity-50 z-20">
-              <ActivityIndicator size="large" color={colors.theme.brown} />
+              <ActivityIndicator size="large" color={colors.theme.green} />
             </View>
           ) : (
             <>
@@ -322,10 +322,10 @@ const MicrochipScan = () => {
                             )
                           )}
                           <TouchableOpacity onPress={() => handleInfoPress(chip.microchipNumber)} disabled={isPressed} className="mx-3">
-                            <Icon name="info-circle" size={20} color={colors.theme.brown} />
+                            <Icon name="info-circle" size={20} color={colors.theme.green} />
                           </TouchableOpacity>
                           <TouchableOpacity onPress={() => handleDelete(index)} className="mx-3">
-                            <Icon name="trash" size={20} />
+                            <Icon name="trash" size={20} color={colors.theme.black}/>
                           </TouchableOpacity>
                         </View>
                       </View>
@@ -336,7 +336,7 @@ const MicrochipScan = () => {
 
               <View className={`flex-row justify-between mt-auto mb-2 gap-2 ${isLandscape ? "flex-wrap" : ""}`}>
                 <TouchableOpacity
-                  className={`rounded-full py-3 flex-1 min-w-[150px] items-center ${isLoading || scannedMicrochips.length == 0 ? "bg-gray-400" : "bg-brown"}`}
+                  className={`rounded-full py-3 flex-1 min-w-[150px] items-center ${isLoading || scannedMicrochips.length == 0 ? "bg-gray-400" : "bg-black"}`}
                   disabled={isLoading || scannedMicrochips.length == 0}
                   onPress={() => {isInternetReachable ? saveHorseDetails(null) : saveScannedMicrochipsToAsyncStorage()}}
                 >
@@ -344,11 +344,11 @@ const MicrochipScan = () => {
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                  className={`rounded-full py-3 flex-1 min-w-[150px] items-center ${isLoading || scannedMicrochips.length == 0 ? "bg-gray-400" : "border border-brown text-brown"}`}
+                  className={`rounded-full py-3 flex-1 min-w-[150px] items-center ${isLoading || scannedMicrochips.length == 0 ? "bg-gray-400" : "border border-black text-black"}`}
                   disabled={isLoading || scannedMicrochips.length == 0}
                   onPress={clearMicrochips}
                 >
-                  <Text className={`${isLoading || scannedMicrochips.length == 0 ? "text-white" : "text-brown"} text-lg`}>Clear</Text>
+                  <Text className={`${isLoading || scannedMicrochips.length == 0 ? "text-white" : "text-black"} text-lg`}>Clear</Text>
                 </TouchableOpacity>
               </View>
             </>

@@ -38,7 +38,7 @@ const ScanInstruction = () => {
         {/* Button and Instruction Text at Bottom */}
         <View className="mb-12">
           <TouchableOpacity
-            className="bg-brown rounded-full flex items-center justify-center"
+            className="bg-black rounded-full flex items-center justify-center"
             style={{
               height: 45,
               width: isPortrait ? "100%" : "60%",

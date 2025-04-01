@@ -7,7 +7,7 @@ const NoInternetScreen = ({ onRetry }) => {
   return (
     <View className="flex-1 bg-white items-center justify-center px-6">
       {/* No Internet Icon */}
-      <Icon name="wifi-off" size={80} color ={colors.theme.brown} />
+      <Icon name="wifi-off" size={80} color ={colors.theme.black} />
 
       {/* Title */}
       <Text className="text-gold text-2xl font-bold mt-6">

@@ -65,7 +65,7 @@ const HorseDetail = ({ route }) => {
     <View className="flex-1 bg-white p-4">
       {isLoading ? (
         <View className="absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center bg-opacity-50 z-20">
-          <ActivityIndicator size="large" color={colors.theme.brown} />
+          <ActivityIndicator size="large" color={colors.theme.green} />
         </View>
       ) : (
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -90,7 +90,7 @@ const HorseDetail = ({ route }) => {
             <View className="flex-1 justify-center items-center">
               <Text className="text-lg font-semibold text-gray-500 text-center">{horseMessage}</Text>
               <TouchableOpacity
-                className="mt-4 bg-brown px-6 py-2 rounded-full"
+                className="mt-4 bg-black px-6 py-2 rounded-full"
                 onPress={() => navigation.navigate("Scan", { screen: "MicrochipScan" })}
               >
                 <Text className="text-white font-semibold">Go back</Text>

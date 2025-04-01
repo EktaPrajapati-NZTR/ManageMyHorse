@@ -4,6 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Entypo from "react-native-vector-icons/Entypo";
 
 import HorseDetail from "../screens/HorseDetail";
+import { colors } from "../constants/ColorConstant"
 
 // Create Stack Navigator for Horse Detail (to handle back navigation)
 const HorseStack = createStackNavigator();
@@ -11,10 +12,10 @@ const HorseStack = createStackNavigator();
 const HorseStackNavigator = () => (
   <HorseStack.Navigator
     screenOptions={{
-      headerStyle: { backgroundColor: '#A07C52',
+      headerStyle: { backgroundColor: colors.theme.silver,
         height: Platform.OS === 'ios' ? 100 : 50
           },
-        headerTintColor: 'white',
+        headerTintColor: colors.theme.white,
         headerTitleStyle: {
           fontSize: 20,
       }
@@ -30,7 +31,7 @@ const HorseStackNavigator = () => (
             <Entypo
                 name="chevron-left" 
                 size={26} 
-                color="white" 
+                color={colors.theme.white}
                 style={{ 
                     marginLeft: 15,
                     marginRight: 15

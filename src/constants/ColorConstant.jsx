@@ -1,7 +1,9 @@
 export const colors = {
     theme: {
-      brown: "#A07C52",
       black: "#000000",
+      white: "#FFFFFF",
+      silver: "#8E9091",
+      green: "#637040"
     },
   };
   
