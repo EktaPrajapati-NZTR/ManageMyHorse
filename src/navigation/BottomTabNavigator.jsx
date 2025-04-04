@@ -1,14 +1,13 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { NavigationContainer } from "@react-navigation/native";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
 // Import Screens
 import HorseStackNavigator from "./HorseStackNavigator";
-import MapView from "../screens/MapView";
-import Settings from "../screens/Settings";
+// import MapView from "../screens/MapView";
+// import Settings from "../screens/Settings";
 import ScanStackNavigator from "./ScanStackNavigator";
 import { colors } from "../constants/ColorConstant"
 
@@ -17,14 +16,13 @@ const Tab = createBottomTabNavigator();
 
 const BottomTabNavigator = () => {
   return (
-    <NavigationContainer>
       <Tab.Navigator
         screenOptions={({ route }) => {
           const iconMapping = {
             Scan: { icon: "scan-outline", component: Ionicons },
             Horse: { icon: "horse-head", component: FontAwesome5, isFontAwesome: true },
-            Map: { icon: "map-outline", component: Ionicons },
-            Settings: { icon: "settings-outline", component: Ionicons },
+            // Map: { icon: "map-outline", component: Ionicons },
+            // Settings: { icon: "settings-outline", component: Ionicons },
           };
 
           const { icon, component: IconComponent, isFontAwesome } = iconMapping[route.name] || {};
@@ -65,7 +63,6 @@ const BottomTabNavigator = () => {
         {/* <Tab.Screen name="Map" component={MapView} options={{ headerTitle: "Map View" }} />
         <Tab.Screen name="Settings" component={Settings} options={{ headerTitle: "Settings" }} /> */}
       </Tab.Navigator>
-    </NavigationContainer>
   );
 };
 

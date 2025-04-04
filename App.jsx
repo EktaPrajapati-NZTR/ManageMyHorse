@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BackHandler } from "react-native";
 import SplashScreen from 'react-native-splash-screen';
 
-import BottomTabNavigator from './src/navigation/BottomTabNavigator';
+import AppStackNavigator from './src/navigation/AppStackNavigator';
 
 const App = () => {
 
@@ -26,7 +26,7 @@ const App = () => {
   }, []);
 
   return (
-      <BottomTabNavigator />
+    <AppStackNavigator />
   );
 };
 
