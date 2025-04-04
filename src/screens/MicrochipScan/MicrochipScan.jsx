@@ -65,7 +65,7 @@ const MicrochipScan = () => {
 
   const clearScannedMicrochipsFromStorage = async () => {
     try {
-      await AsyncStorage.clear();
+      await AsyncStorage.removeItem('@scanned_microchips');
     } catch (e) {
       return { scannedMicrochips: [] };
     }
