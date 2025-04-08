@@ -105,7 +105,7 @@ const MicrochipScan = () => {
       if(location != null){
         setScannedMicrochips((prev) => [
           ...prev,
-          { microchipNumber: newMicrochip, isRegistered: null, Latitude: location?.coords?.latitude, Longitude: location?.coords?.latitude },
+          { microchipNumber: newMicrochip, isRegistered: null, Latitude: location?.coords?.latitude, Longitude: location?.coords?.longitude },
         ]);
         setInputValue("");
         // setTimeout(() => {
