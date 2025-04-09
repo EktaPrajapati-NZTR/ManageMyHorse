@@ -189,7 +189,11 @@ const MicrochipScan = () => {
         Alert.alert("Error", response.data.message || "Failed to save horse(s) with location");
       }
     } catch (error) {
-      Alert.alert("Error", error.response?.data?.message || "Failed to save horse(s) with location");
+      if (!error.response) {
+        Alert.alert("Network Error","Failed to save horse(s) with location");
+      } else {
+        Alert.alert(error.response?.data?.message || "Access Denied - Your API key is invalid or expired.");
+      }
     } finally {
       setIsLoading(false);
     }

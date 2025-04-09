@@ -30,7 +30,8 @@ const HorseDetail = ({ route }) => {
       const response = await api.get(
         URLConfig.MICROCHIP.GetHorseByMicrochipNumber(microchipNumber)
       );
-      if (response.data.success) {
+
+      if (response?.data?.success) {
         let updatedData = { ...response.data.data };
         if (response.data.data.timestamp) {
           const formattedDate = new Date(response.data.data.timestamp).toLocaleString('en-GB', { hour12: false });
@@ -43,7 +44,11 @@ const HorseDetail = ({ route }) => {
       }
     } catch (error) {
       setHorseData(null);
-      setHorseMessage(error.response?.data?.message || "Network error.");
+      if (!error.response) {
+        setHorseMessage("Network Error");
+      } else {
+        setHorseMessage(error.response?.data?.message || "Access Denied - Your API key is invalid or expired.");
+      }
     } finally {
       setIsLoading(false);
     }
