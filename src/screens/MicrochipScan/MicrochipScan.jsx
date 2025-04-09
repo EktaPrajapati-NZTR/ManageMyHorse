@@ -206,7 +206,7 @@ const MicrochipScan = () => {
   //Hook to handle back navigation
   usePreventRemove(scannedMicrochips.length > 0, ({ data }) => {
     Alert.alert(
-      "You have unsaved data",
+      "You have scanned data",
       "Do you want to discard scanned microchips and go back?",
       [
         { text: "Stay", style: "cancel" },
