@@ -182,8 +182,8 @@ const MicrochipScan = () => {
         const hasUnregisteredMicrochip  = microchipsWithStatus.some(chip => chip.isRegistered === false);
         Alert.alert("Success", 
           hasUnregisteredMicrochip
-          ? "Horse(s) location saved successfully, but some microchips are unregistered."
-          : response?.data?.message || "Horse(s)  with location saved successfully.",
+          ? "Location saved successfully for horse(s). Some are unregistered."
+          : response?.data?.message || "Location saved successfully for horse(s).",
         );
       } else {
         Alert.alert("Error", response.data.message || "Failed to save horse(s) with location");
