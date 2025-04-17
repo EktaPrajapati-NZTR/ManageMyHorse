@@ -84,7 +84,8 @@ const HorseDetail = ({ route }) => {
                 <Text className="text-base font-semibold p-2">Owner: {horseData.owner ? horseData.owner : '-'}</Text>
                 <Text className="text-base font-semibold p-2">Brand left shoulder: {horseData.brandLeftShoulder ? horseData.brandLeftShoulder : '-'}</Text>
                 <Text className="text-base font-semibold p-2">Brand right shoulder: {horseData.brandRightShoulder ? horseData.brandRightShoulder : '-'}</Text>
-                <Text className="text-base font-semibold p-2">Base color: {horseData.baseColours ? horseData.baseColours : '-'}</Text>
+                <Text className="text-base font-semibold p-2">Base colour: {horseData.baseColours ? horseData.baseColours : '-'}</Text>
+                <Text className="text-base font-semibold p-2">Trainer: {horseData.trainerName ? horseData.trainerName : '-'}</Text>
                 <Text className="text-base font-semibold p-2">
                   Last Location: {horseData.latitude ? `${horseData.latitude.toFixed(4)}, ${horseData.longitude?.toFixed(4)}` : "-"}
                 </Text>
