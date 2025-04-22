@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { Alert } from "react-native";
 import Geolocation from "react-native-geolocation-service";
 
 const useLocation = () => {
@@ -18,7 +19,7 @@ const useLocation = () => {
       (error) => {
         setLocation(null);
         if (setIsLoading) setIsLoading(false);
-        console.log(`Code ${error.code}`, error.message);
+        // console.log(`Code ${error.code}`, error.message);
         Alert.alert("Alert","Something wrong while fetching location data");
       },
       {
