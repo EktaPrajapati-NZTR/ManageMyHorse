@@ -3,36 +3,33 @@ import { Alert } from "react-native";
 import Geolocation from "react-native-geolocation-service";
 
 const useLocation = () => {
-  const [location, setLocation] = useState(null);
 
   // Function to get the current location
-  const getLocation = async (setIsLoading) => {
-    if (setIsLoading) setIsLoading(true);
+  const getLocation = async () => {
+    return new Promise((resolve, reject) => {
 
-    Geolocation.getCurrentPosition(
-      (position) => {
-        setTimeout(() => {
-          setLocation(position);
-          if (setIsLoading) setIsLoading(false);
-        }, 200);
-      },
-      (error) => {
-        setLocation(null);
-        if (setIsLoading) setIsLoading(false);
-        // console.log(`Code ${error.code}`, error.message);
-        Alert.alert("Alert","Something wrong while fetching location data");
-      },
-      {
-        accuracy: {
-          android: "high",
-          ios: "best",
+      Geolocation.getCurrentPosition(
+        (position) => {
+          setTimeout(() => {
+            resolve(position);
+          }, 200);
         },
-        enableHighAccuracy: true,
-        timeout: 15000,
-        maximumAge: 10000,
-        distanceFilter: 0,
-      }
-    );
+        (error) => {
+          reject(error);
+          Alert.alert("Alert","Something wrong while fetching location data");
+        },
+        {
+          accuracy: {
+            android: "high",
+            ios: "best",
+          },
+          enableHighAccuracy: true,
+          timeout: 15000,
+          maximumAge: 10000,
+          distanceFilter: 0,
+        }
+      );
+    });
   };
 
   // useEffect(() => {
@@ -42,7 +39,7 @@ const useLocation = () => {
   //   }
   // }, [permissionStatus]);
 
-  return { getLocation, location };
+  return { getLocation };
 };
 
 export default useLocation;

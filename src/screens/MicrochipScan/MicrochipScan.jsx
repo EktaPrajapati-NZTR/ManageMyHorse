@@ -32,7 +32,7 @@ const MicrochipScan = () => {
   const [showTipCheck, setTipCheck] = useState(false);
   const [showTipCross, setTipCross] = useState(false);
   const {permissionStatus, checkPermissionStatus, checkAndRequestPermission, handleBlockedPermission} = usePermission(permission.location);
-  const { location, getLocation } = useLocation();
+  const { getLocation } = useLocation();
 
 
   const saveScannedMicrochipsToAsyncStorage = async () => {
@@ -101,16 +101,24 @@ const MicrochipScan = () => {
     }
 
     if (permissionStatus === RESULTS.GRANTED) {
-      await getLocation(setIsLoading);
-      if(location != null){
-        setScannedMicrochips((prev) => [
-          ...prev,
-          { microchipNumber: newMicrochip, isRegistered: null, Latitude: location?.coords?.latitude, Longitude: location?.coords?.longitude },
-        ]);
-        setInputValue("");
-        // setTimeout(() => {
-          //inputRef.current?.focus();
-        // }, 300); 
+      setIsLoading(true);
+      try {
+        const position = await getLocation();
+        setIsLoading(false); 
+        
+        if(position){
+          const { latitude, longitude } = position.coords;
+          setScannedMicrochips((prev) => [
+            ...prev,
+            { microchipNumber: newMicrochip, isRegistered: null, Latitude: latitude, Longitude: longitude },
+          ]);
+          setInputValue("");
+          // setTimeout(() => {
+            //inputRef.current?.focus();
+          // }, 300); 
+        }
+      } catch (error) {
+        setIsLoading(false);
       }
     }
     else{
@@ -189,6 +197,7 @@ const MicrochipScan = () => {
         Alert.alert("Error", response.data.message || "Failed to save locatin for horse(s).");
       }
     } catch (error) {
+      console.log(error);
       if (!error.response) {
         Alert.alert("Network Error","Failed to save locatin for horse(s).");
       } else {
@@ -221,11 +230,14 @@ const MicrochipScan = () => {
 
   useEffect(() => {
     const fetchLocation = async() =>{
-      if (permissionStatus === RESULTS.GRANTED) {
-        await getLocation();
-      }else{
+      if(permissionStatus != RESULTS.GRANTED){
         await checkAndRequestPermission();
       }
+      // if (permissionStatus === RESULTS.GRANTED) {
+      //   await getLocation();
+      // }else{
+      //   await checkAndRequestPermission();
+      // }
     }
     if (permissionStatus !== null) {
       fetchLocation();
