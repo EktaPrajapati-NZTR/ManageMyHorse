@@ -79,19 +79,19 @@ const HorseDetail = ({ route }) => {
               <Text className="text-2xl font-bold mb-4 text-center">{horseData.horseName || horseData.appDisplayName}</Text>
 
               <View className="bg-gray-100 p-4 rounded-lg">
-                <Text className="text-base font-semibold p-2">Age year: {horseData.ageYear ? horseData.ageYear : '-'}</Text>
-                <Text className="text-base font-semibold p-2">Sex at Birth: {horseData.sexAtBirth ? horseData.sexAtBirth : '-'}</Text>
-                <Text className="text-base font-semibold p-2">Owner: {horseData.owner ? horseData.owner : '-'}</Text>
-                <Text className="text-base font-semibold p-2">Brand left shoulder: {horseData.brandLeftShoulder ? horseData.brandLeftShoulder : '-'}</Text>
-                <Text className="text-base font-semibold p-2">Brand right shoulder: {horseData.brandRightShoulder ? horseData.brandRightShoulder : '-'}</Text>
-                <Text className="text-base font-semibold p-2">Base colour: {horseData.baseColours ? horseData.baseColours : '-'}</Text>
-                <Text className="text-base font-semibold p-2">Trainer: {horseData.trainerName ? horseData.trainerName : '-'}</Text>
-                <Text className="text-base font-semibold p-2">Dam: {horseData.damName ? horseData.damName : '-'}</Text>
-                <Text className="text-base font-semibold p-2">Sire: {horseData.sireName ? horseData.sireName : '-'}</Text>
+                <Text className="text-base font-semibold p-2">Age year: {horseData.ageYear || '-'}</Text>
+                <Text className="text-base font-semibold p-2">Sex at Birth: {horseData.sexAtBirth || '-'}</Text>
+                <Text className="text-base font-semibold p-2">Owner: {horseData.owner || '-'}</Text>
+                <Text className="text-base font-semibold p-2">Brand left shoulder: {horseData.brandLeftShoulder || '-'}</Text>
+                <Text className="text-base font-semibold p-2">Brand right shoulder: {horseData.brandRightShoulder || '-'}</Text>
+                <Text className="text-base font-semibold p-2">Base colour: {horseData.baseColours || '-'}</Text>
+                <Text className="text-base font-semibold p-2">Trainer: {horseData.trainerName || '-'}</Text>
+                <Text className="text-base font-semibold p-2">Dam: {horseData.damName || '-'}</Text>
+                <Text className="text-base font-semibold p-2">Sire: {horseData.sireName || '-'}</Text>
                 <Text className="text-base font-semibold p-2">
-                  Last Location: {horseData.latitude ? `${horseData.latitude.toFixed(4)}, ${horseData.longitude?.toFixed(4)}` : "-"}
+                  Last Location: {horseData.latitude && horseData.longitude ? `${horseData.latitude.toFixed(4)}, ${horseData.longitude.toFixed(4)}` : "-"}
                 </Text>
-                <Text className="text-base font-semibold p-2">Last recorded time:  {horseData.timestamp ? horseData.timestamp : '-'}</Text>
+                <Text className="text-base font-semibold p-2">Last recorded time:  {horseData.timestamp || '-'}</Text>
               </View>
             </View>
           ) : (
