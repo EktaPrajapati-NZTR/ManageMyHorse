@@ -230,11 +230,12 @@ const MicrochipScan = () => {
 
   useEffect(() => {
     const fetchLocation = async() =>{
-      if(permissionStatus != RESULTS.GRANTED){
+      if (permissionStatus != RESULTS.GRANTED) {
         await checkAndRequestPermission();
       }
       // if (permissionStatus === RESULTS.GRANTED) {
-      //   await getLocation();
+      //   const position = await getLocation();
+      //   setLocation(position);
       // }else{
       //   await checkAndRequestPermission();
       // }
