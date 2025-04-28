@@ -20,6 +20,8 @@ android/app/.cxx/
 android/.idea/
 android/app/src/main/res/drawable-mdpi/node_modules_*
 android/app/src/main/assets/index.android.bundle
+android/gradle.properties
+android/app/*.keystore
 
 # iOS
 ios/Pods/
