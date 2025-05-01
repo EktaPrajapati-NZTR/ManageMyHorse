@@ -110,7 +110,7 @@ const MicrochipScan = () => {
           const { latitude, longitude } = position.coords;
           setScannedMicrochips((prev) => [
             ...prev,
-            { microchipNumber: newMicrochip, isRegistered: null, Latitude: latitude, Longitude: longitude },
+            { microchipNumber: newMicrochip, isRegistered: null, Latitude: latitude, Longitude: longitude, Timestamp: new Date().toISOString() },
           ]);
           setInputValue("");
           // setTimeout(() => {
@@ -197,7 +197,6 @@ const MicrochipScan = () => {
         Alert.alert("Error", response.data.message || "Failed to save locatin for horse(s).");
       }
     } catch (error) {
-      console.log(error);
       if (!error.response) {
         Alert.alert("Network Error","Failed to save locatin for horse(s).");
       } else {

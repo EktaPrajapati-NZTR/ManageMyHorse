@@ -23,6 +23,17 @@ const HorseDetail = ({ route }) => {
   const [horseData, setHorseData] = useState(null);
   const [horseMessage, setHorseMessage] = useState("");
 
+  function convertUTCDateToLocalDate(date) {
+    var newDate = new Date(date.getTime()+date.getTimezoneOffset()*60*1000);
+
+    var offset = date.getTimezoneOffset() / 60;
+    var hours = date.getHours();
+
+    newDate.setHours(hours - offset);
+
+    return newDate;   
+}
+
   const getHorseDetails = async () => {
     if (!microchipNumber) return;
     try {
@@ -33,9 +44,10 @@ const HorseDetail = ({ route }) => {
 
       if (response?.data?.success) {
         let updatedData = { ...response.data.data };
-        if (response.data.data.timestamp) {
-          const formattedDate = new Date(response.data.data.timestamp).toLocaleString('en-GB', { hour12: false });
-          updatedData.timestamp = formattedDate;
+        if (updatedData?.timestamp) {
+          const utcString = updatedData?.timestamp;
+          var localDateTime = convertUTCDateToLocalDate(new Date(utcString));
+          updatedData.timestamp = localDateTime.toLocaleString();
         }
         setHorseData(updatedData); 
       } else {
