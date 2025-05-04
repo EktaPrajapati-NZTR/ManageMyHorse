@@ -7,6 +7,7 @@ node_modules/
 
 # React Native packager
 packager-info.json
+package-lock.json
 
 # Android
 /android/build/
