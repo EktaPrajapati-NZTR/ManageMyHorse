@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { BackHandler } from "react-native";
 import SplashScreen from 'react-native-splash-screen';
 
+import { initDB } from "./src/utils/database";
+import { clearHorseLocationsToday } from './src/utils/helper';
 import AppStackNavigator from './src/navigation/AppStackNavigator';
 
 const App = () => {
@@ -11,6 +13,16 @@ const App = () => {
     //Hide splash screen
     SplashScreen.hide();
     
+    //Initialize sqlite database
+    (async () => {
+      try {
+        await initDB(); // only creates the table once
+        clearHorseLocationsToday();
+      } catch (error) {
+        console.error('Error initializing DB:', error);
+      }
+    })();
+
     // Function to prevent hardware back button action
     const backAction = () => {
       return true; // This prevents the default behavior (doing nothing)

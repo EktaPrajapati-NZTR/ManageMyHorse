@@ -16,6 +16,7 @@ import { useNetwork } from "../../hooks/useNetwork";
 import usePermission from "../../hooks/usePermission";
 import useLocation from "../../hooks/useLocation";
 import { permission } from "../../utils/permissions";
+import { saveAllHorseLocations } from "../../utils/database";
 import "../../../global.css";
 
 const MicrochipScan = () => {
@@ -39,14 +40,14 @@ const MicrochipScan = () => {
     try {
       if(scannedMicrochips.length > 0){
         let updatedData = [];
-        const existingData = await AsyncStorage.getItem('@scanned_microchips');
+        const existingData = await AsyncStorage.getItem('scanned_microchips');
         if (existingData) {
           const parsedData = JSON.parse(existingData);
           updatedData = Array.isArray(parsedData) ? [...parsedData, ...scannedMicrochips] : [parsedData, ...scannedMicrochips];
         } else {
           updatedData = scannedMicrochips;
         }
-        await AsyncStorage.setItem('@scanned_microchips', JSON.stringify(updatedData));
+        await AsyncStorage.setItem('scanned_microchips', JSON.stringify(updatedData));
         Alert.alert("Success", "Scanned microchip data has been temporarily stored. You can restore it once the internet is available.");
       }
     } catch (e) {
@@ -56,7 +57,7 @@ const MicrochipScan = () => {
 
   const loadScannedMicrochips = async () => {
     try {
-      const value = await AsyncStorage.getItem('@scanned_microchips');
+      const value = await AsyncStorage.getItem('scanned_microchips');
       return value != null ? JSON.parse(value) : { scannedMicrochips: [] };
     } catch (e) {
       return { scannedMicrochips: [] };
@@ -65,7 +66,7 @@ const MicrochipScan = () => {
 
   const clearScannedMicrochipsFromStorage = async () => {
     try {
-      await AsyncStorage.removeItem('@scanned_microchips');
+      await AsyncStorage.removeItem('scanned_microchips');
     } catch (e) {
       return { scannedMicrochips: [] };
     }
@@ -186,7 +187,7 @@ const MicrochipScan = () => {
 
         const microchipsWithStatus = response.data.data || [];
         setScannedMicrochips(microchipsWithStatus);
-
+        await saveAllHorseLocations(microchipsWithStatus);
         const hasUnregisteredMicrochip  = microchipsWithStatus.some(chip => chip.isRegistered === false);
         Alert.alert("Success", 
           hasUnregisteredMicrochip
