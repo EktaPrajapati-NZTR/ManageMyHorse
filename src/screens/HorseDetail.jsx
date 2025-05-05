@@ -11,6 +11,7 @@ import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import api from "../utils/api";
 import URLConfig from "../constants/UrlConstant";
 import { colors } from "../constants/ColorConstant";
+import {convertUTCDateTimeToLocalDateTime} from "../utils/helper";
 import { useNetwork } from "../hooks/useNetwork";
 import NoInternetScreen from "../utils/NoInternetScreen";
 
@@ -23,17 +24,6 @@ const HorseDetail = ({ route }) => {
   const [horseData, setHorseData] = useState(null);
   const [horseMessage, setHorseMessage] = useState("");
 
-  function convertUTCDateToLocalDate(date) {
-    var newDate = new Date(date.getTime() - date.getTimezoneOffset()*60*1000);
-
-    // var offset = date.getTimezoneOffset() / 60;
-    // var hours = date.getHours();
-
-    // newDate.setHours(hours - offset);
-
-    return newDate;   
-}
-
   const getHorseDetails = async () => {
     if (!microchipNumber) return;
     try {
@@ -44,11 +34,6 @@ const HorseDetail = ({ route }) => {
 
       if (response?.data?.success) {
         let updatedData = { ...response.data.data };
-        if (updatedData?.timestamp) {
-          const utcString = updatedData?.timestamp;
-          var localDateTime = convertUTCDateToLocalDate(new Date(utcString));
-          updatedData.timestamp = localDateTime.toLocaleString();
-        }
         setHorseData(updatedData); 
       } else {
         setHorseData(null);
@@ -103,7 +88,7 @@ const HorseDetail = ({ route }) => {
                 <Text className="text-base font-semibold p-2">
                   Last Location: {horseData.latitude && horseData.longitude ? `${horseData.latitude.toFixed(4)}, ${horseData.longitude.toFixed(4)}` : "-"}
                 </Text>
-                <Text className="text-base font-semibold p-2">Last recorded time:  {horseData.timestamp || '-'}</Text>
+                <Text className="text-base font-semibold p-2">Last recorded time: {horseData.timestamp ? convertUTCDateTimeToLocalDateTime(horseData.timestamp) : '-'}</Text>
               </View>
             </View>
           ) : (
