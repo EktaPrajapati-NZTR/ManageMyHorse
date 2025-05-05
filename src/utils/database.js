@@ -1,48 +1,48 @@
 import SQLite from 'react-native-sqlite-storage';
 
-SQLite.enablePromise(true);
+  SQLite.enablePromise(true);
 
-const db = SQLite.openDatabase({ name: 'HorseLocation.db', location: 'default' });
+  const db = SQLite.openDatabase({ name: 'HorseLocation.db', location: 'default' });
 
-export const initDB = async () => {
-  const database = await db;
-
-  await database.executeSql(`
-    CREATE TABLE IF NOT EXISTS HorseLocations (
-      HorseLocationId INTEGER,
-      HorseId INTEGER,
-      HorseName TEXT,
-      MicrochipNumber TEXT,
-      Latitude REAL,
-      Longitude REAL,
-      Timestamp TEXT
-    );
-  `);
-};
-
-export const saveAllHorseLocations = async (microchipList) => {
+  export const initDB = async () => {
     const database = await db;
 
-    await Promise.all(
-        microchipList.map(async (chip) => {
-    await database.executeSql(
-        `
-        INSERT INTO HorseLocations (HorseLocationId, HorseId, HorseName, MicrochipNumber, Latitude, Longitude, Timestamp)
-        VALUES (?, ?, ?, ?, ?, ?, ?);
-        `,
-        [
-            chip.horseLocationId,
-            chip.horseId,
-            chip.horseName,
-            chip.microchipNumber,
-            chip.latitude,
-            chip.longitude,
-            chip.timestamp,
-        ]
-        );
-    })
-    );
-};
+    await database.executeSql(`
+      CREATE TABLE IF NOT EXISTS HorseLocations (
+        horseLocationId INTEGER,
+        horseId INTEGER,
+        horseName TEXT,
+        microchipNumber TEXT,
+        latitude REAL,
+        longitude REAL,
+        timestamp TEXT
+      );
+    `);
+  };
+
+  export const saveAllHorseLocations = async (microchipList) => {
+      const database = await db;
+
+      await Promise.all(
+          microchipList.map(async (chip) => {
+      await database.executeSql(
+          `
+          INSERT INTO HorseLocations (horseLocationId, horseId, horseName, microchipNumber, latitude, longitude, timestamp)
+          VALUES (?, ?, ?, ?, ?, ?, ?);
+          `,
+          [
+              chip.horseLocationId,
+              chip.horseId,
+              chip.horseName,
+              chip.microchipNumber,
+              chip.latitude,
+              chip.longitude,
+              chip.timestamp,
+          ]
+          );
+      })
+      );
+  };
   
   export const getAllHorseLocations = async () => {
     const database = await db;
