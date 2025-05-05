@@ -6,6 +6,7 @@ import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
 // Import Screens
 import HorseStackNavigator from "./HorseStackNavigator";
+import ScannedHorseHistory from "../screens/ScannedHorseHistory";
 // import MapView from "../screens/MapView";
 // import Settings from "../screens/Settings";
 import ScanStackNavigator from "./ScanStackNavigator";
@@ -21,6 +22,7 @@ const BottomTabNavigator = () => {
           const iconMapping = {
             Scan: { icon: "scan-outline", component: Ionicons },
             Horse: { icon: "horse-head", component: FontAwesome5, isFontAwesome: true },
+            History: {icon: "history", component: FontAwesome5, isFontAwesome: true}
             // Map: { icon: "map-outline", component: Ionicons },
             // Settings: { icon: "settings-outline", component: Ionicons },
           };
@@ -57,6 +59,19 @@ const BottomTabNavigator = () => {
           listeners={{
             tabPress: (e) => {
               e.preventDefault();
+            },
+          }}
+        />
+        <Tab.Screen name="History" component={ScannedHorseHistory} 
+          options={{
+            headerTitle: "History",
+            headerStyle: { 
+              backgroundColor: colors.theme.silver, 
+              height: Platform.OS === 'ios' ? 100 : 50 
+            },
+            headerTintColor: colors.theme.white,
+            headerTitleStyle: {
+              fontSize: 20,
             },
           }}
         />
