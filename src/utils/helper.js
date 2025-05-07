@@ -19,16 +19,20 @@ import { clearHorseLocations } from '../utils/database';
     }
   }
 
+  export const formatDateToDDMMYYYY = (date) => {
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
+
   // Converts a UTC date to a local date.
   export const convertUTCDateTimeToLocalDateTime = (dateString) => {
     if (!dateString.endsWith('Z')) {
       dateString += 'Z';
     }
     let date = new Date(dateString);
-
-    const day = String(date.getDate()).padStart(2, "0");
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const year = date.getFullYear();
+    const formattedDate = formatDateToDDMMYYYY(date);
 
     let hours = date.getHours();
     const minutes = String(date.getMinutes()).padStart(2, "0");
@@ -39,13 +43,20 @@ import { clearHorseLocations } from '../utils/database';
     hours = hours % 12 || 12; // Convert to 12-hour format
     const formattedHours = String(hours).padStart(2, "0");
 
-    return `${day}/${month}/${year} ${formattedHours}:${minutes}:${seconds} ${ampm}`;
-
-    // const UTCdate = new Date(dateString);
-    // const localDate = new Date(UTCdate.getTime() - UTCdate.getTimezoneOffset() * 60 * 1000);
-    // var offset = localDate.getTimezoneOffset() / 60;
-    // var hours = localDate.getHours();
-
-    // localDate.setHours(hours - offset);
-    // return localDate.toLocaleString();
+    return `${formattedDate} ${formattedHours}:${minutes}:${seconds} ${ampm}`;
   }
+
+  export const convertAndFormatUTCDateToLocalDate = (input) => {
+    const date = typeof input === 'string'
+      ? new Date(input.endsWith('Z') ? input : input + 'Z')
+      : new Date(input); // if already a Date object
+  
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = date.getFullYear();
+  
+    return `${year}-${month}-${day}`;
+  };
+
+  
+  
