@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import BottomTabNavigator from './BottomTabNavigator';
 import TermsAndConditions from '../utils/TermsAndConditions'; 
+import Login from '../screens/Login';
 
 const Stack = createStackNavigator();
 
@@ -34,11 +35,16 @@ const AppStackNavigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator 
-        initialRouteName={isFirstTime ? "TermsAndConditions" : "BottomTabNavigator"}
+        initialRouteName={isFirstTime ? "TermsAndConditions" : "Login"}
         screenOptions={{headerShown: false}}>
           <Stack.Screen
             name="TermsAndConditions"
             component={TermsAndConditions}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Login"
+            component={Login}
             options={{ headerShown: false }}
           />
           <Stack.Screen

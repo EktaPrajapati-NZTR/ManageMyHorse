@@ -28,10 +28,7 @@ const TermsAndConditions = ({ navigation }) => {
         <TouchableOpacity
           className="bg-black rounded-full py-3 mt-6"
           onPress={() =>
-            navigation.reset({
-              index: 0,
-              routes: [{ name: 'BottomTabNavigator' }],
-            })
+            navigation.navigate("Login", { screen: "Login" })
           }
         >
           <Text className="text-white text-center font-bold text-lg">Accept & Continue</Text>
