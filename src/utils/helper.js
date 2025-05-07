@@ -1,3 +1,4 @@
+import { BackHandler } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { clearHorseLocations } from '../utils/database';
 
@@ -46,6 +47,7 @@ import { clearHorseLocations } from '../utils/database';
     return `${formattedDate} ${formattedHours}:${minutes}:${seconds} ${ampm}`;
   }
 
+  // Convert and format UTC date to local date
   export const convertAndFormatUTCDateToLocalDate = (input) => {
     const date = typeof input === 'string'
       ? new Date(input.endsWith('Z') ? input : input + 'Z')
@@ -56,6 +58,13 @@ import { clearHorseLocations } from '../utils/database';
     const year = date.getFullYear();
   
     return `${year}-${month}-${day}`;
+  };
+
+  // Preventing to go back by disabling hardware back.
+  export const disableHardwareBack = () => {
+    const backAction = () => true; 
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
+    return () => backHandler.remove();
   };
 
   
