@@ -56,7 +56,8 @@ const Login = ({navigation}) => {
 
         <View>
           {/* Log in Button */}
-          <TouchableOpacity className="bg-black rounded-full py-3" 
+          <TouchableOpacity className="bg-black rounded-full py-3 self-center px-12" 
+            style={{backgroundColor: colors.theme.green}}
             onPress={() => navigation.reset({
               index: 0, 
               routes: [{ name: 'BottomTabNavigator' }]
