@@ -31,7 +31,7 @@ const AppStackNavigator = () => {
   }, []);
 
   if (!initialScreen) {
-    return null; // or splash/loading screen
+    return null;
   }
 
   return (
