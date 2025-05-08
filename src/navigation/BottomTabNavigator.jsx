@@ -7,8 +7,8 @@ import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 // Import Screens
 import HorseStackNavigator from "./HorseStackNavigator";
 import ScannedHorseHistory from "../screens/ScannedHorseHistory";
-// import MapView from "../screens/MapView";
-// import Settings from "../screens/Settings";
+import MapView from "../screens/MapView";
+import Settings from "../screens/Settings";
 import ScanStackNavigator from "./ScanStackNavigator";
 import { colors } from "../constants/ColorConstant"
 
@@ -22,9 +22,9 @@ const BottomTabNavigator = () => {
           const iconMapping = {
             Scan: { icon: "scan-outline", component: Ionicons },
             Horse: { icon: "horse-head", component: FontAwesome5, isFontAwesome: true },
-            History: {icon: "history", component: FontAwesome5, isFontAwesome: true}
+            History: {icon: "history", component: FontAwesome5, isFontAwesome: true},
+            Settings: { icon: "settings-outline", component: Ionicons },
             // Map: { icon: "map-outline", component: Ionicons },
-            // Settings: { icon: "settings-outline", component: Ionicons },
           };
 
           const { icon, component: IconComponent, isFontAwesome } = iconMapping[route.name] || {};
@@ -75,8 +75,20 @@ const BottomTabNavigator = () => {
             },
           }}
         />
-        {/* <Tab.Screen name="Map" component={MapView} options={{ headerTitle: "Map View" }} />
-        <Tab.Screen name="Settings" component={Settings} options={{ headerTitle: "Settings" }} /> */}
+        <Tab.Screen name="Settings" component={Settings} 
+          options={{
+            headerTitle: "Settings",
+            headerStyle: { 
+              backgroundColor: colors.theme.silver, 
+              height: Platform.OS === 'ios' ? 100 : 50 
+            },
+            headerTintColor: colors.theme.white,
+            headerTitleStyle: {
+              fontSize: 20,
+            },
+          }}
+        />
+        {/* <Tab.Screen name="Map" component={MapView} options={{ headerTitle: "Map View" }} />*/}
       </Tab.Navigator>
   );
 };
