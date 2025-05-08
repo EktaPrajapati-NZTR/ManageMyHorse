@@ -10,50 +10,41 @@ import Login from '../screens/Login';
 const Stack = createStackNavigator();
 
 const AppStackNavigator = () => {
-  const [isFirstTime, setIsFirstTime] = useState(null);
+  const [initialScreen, setInitialScreen] = useState(null);
 
   useEffect(() => {
-    const checkFirstLaunch = async () => {
+    const init = async () => {
       const isFirstLaunch = await AsyncStorage.getItem('isFirstLaunch');
+      const isLoggedIn = await AsyncStorage.getItem('isLoggedIn');
       if (isFirstLaunch === null) {
-         // Clear AsyncStorage on the first launch
-         await AsyncStorage.clear();
-
-        setIsFirstTime(true);
+        await AsyncStorage.clear();
         await AsyncStorage.setItem('isFirstLaunch', 'false');
+        setInitialScreen('TermsAndConditions');
+      } else if (isLoggedIn === 'true') {
+        setInitialScreen('BottomTabNavigator');
       } else {
-        setIsFirstTime(false);
+        setInitialScreen('Login');
       }
     };
-    checkFirstLaunch();
+
+    init();
   }, []);
 
-  if (isFirstTime === null) {
-    return null; // Wait until the check is complete
+  if (!initialScreen) {
+    return null; // or splash/loading screen
   }
 
   return (
     <NavigationContainer>
-      <Stack.Navigator 
-        initialRouteName={isFirstTime ? "TermsAndConditions" : "Login"}
-        screenOptions={{headerShown: false}}>
-          <Stack.Screen
-            name="TermsAndConditions"
-            component={TermsAndConditions}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="Login"
-            component={Login}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="BottomTabNavigator"
-            component={BottomTabNavigator}
-            options={{ headerShown: false }}
-          />
+      <Stack.Navigator
+        initialRouteName={initialScreen}
+        screenOptions={{ headerShown: false }}
+      >
+        <Stack.Screen name="TermsAndConditions" component={TermsAndConditions} />
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="BottomTabNavigator" component={BottomTabNavigator} />
       </Stack.Navigator>
-    </NavigationContainer>
+  </NavigationContainer>
   );
 };
 

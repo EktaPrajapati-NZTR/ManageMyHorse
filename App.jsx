@@ -9,22 +9,20 @@ import { disableHardwareBack } from './src/utils/helper';
 const App = () => {
 
   useEffect(() => {
-
-    //Hide splash screen
-    SplashScreen.hide();
-    
-    //Initialize sqlite database
-    (async () => {
+    const initApp = async () => {
       try {
         await initDB(); // only creates the table once
         clearHorseLocationsToday();
+        disableHardwareBack();
       } catch (error) {
         console.error('Error initializing DB:', error);
+      } finally {
+        SplashScreen.hide(); // hide only after everything is ready
       }
-    })();
-
-    disableHardwareBack();
-  }, []);
+    };
+  
+    initApp();
+  }, []);  
 
   return (
     <AppStackNavigator />
