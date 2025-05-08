@@ -1,6 +1,8 @@
 import React from "react";
 import { SafeAreaView, ScrollView, View, Text, TouchableOpacity } from "react-native";
- 
+
+import { colors } from "../constants/ColorConstant";
+
 const TermsAndConditions = ({ navigation }) => {
   return (
     <SafeAreaView className="flex-1 bg-white">
@@ -26,7 +28,8 @@ const TermsAndConditions = ({ navigation }) => {
         </View>
  
         <TouchableOpacity
-          className="bg-black rounded-full py-3 mt-6"
+          className="rounded-full py-3 mt-6 self-center px-12"
+          style={{backgroundColor: colors.theme.green}}
           onPress={() =>
             navigation.navigate("Login", { screen: "Login" })
           }
