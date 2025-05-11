@@ -1,7 +1,5 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, ScrollView, Image } from 'react-native';
-import { Ionicons } from 'react-native-vector-icons/Ionicons';
-import { FontAwesome } from 'react-native-vector-icons/FontAwesome';
 import Icon from 'react-native-vector-icons/Feather';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -31,21 +29,21 @@ const Settings = ({ navigation }) => {
 
   return (
       <View className="flex-1 bg-white">
-        <View className="h-36 justify-center items-center mt-8">
+        <View className="h-36 justify-center items-center mt-10">
           <Image
             source={require('../assets/user_default_profile_photo.png')}
             className="w-36 h-36 rounded-full"
           />
         </View>
   
-      <View className="mt-4">
+      <View className="mt-2">
         <InfoRow icon="user" text={fullName} />
         <InfoRow icon="mail" text={user.email} />
         <InfoRow icon="calendar" text={user.dob} />
         <InfoRow icon="map-pin" text={user.region} />
       </View>
   
-      <TouchableOpacity className="mt-6 px-12 py-3 rounded-full self-center"
+      <TouchableOpacity className="mt-8 px-12 py-3 rounded-full self-center"
         style={{backgroundColor: colors.theme.green}}
         onPress={handleLogout}>
         <Text className="text-white text-base font-semibold">Logout</Text>
