@@ -1,13 +1,22 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { colors } from '../constants/ColorConstant';
 
-const Login = ({navigation}) => {
+const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+
+  const handleLogin = async() =>{
+    await AsyncStorage.setItem('isLoggedIn', 'true');
+    navigation.reset({
+      index: 0, 
+      routes: [{ name: 'BottomTabNavigator' }]
+    })
+  }
 
   return (
     <KeyboardAvoidingView
@@ -58,10 +67,7 @@ const Login = ({navigation}) => {
           {/* Log in Button */}
           <TouchableOpacity className="bg-black rounded-full py-3 self-center px-12" 
             style={{backgroundColor: colors.theme.green}}
-            onPress={() => navigation.reset({
-              index: 0, 
-              routes: [{ name: 'BottomTabNavigator' }]
-            })}>
+            onPress={handleLogin}>
             <Text className="text-center text-white font-semibold">Log in</Text>
           </TouchableOpacity>
 
