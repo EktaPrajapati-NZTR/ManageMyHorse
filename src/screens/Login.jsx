@@ -9,13 +9,35 @@ const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
 
   const handleLogin = async() =>{
-    await AsyncStorage.setItem('isLoggedIn', 'true');
-    navigation.reset({
-      index: 0, 
-      routes: [{ name: 'BottomTabNavigator' }]
-    })
+
+    let valid = true;
+
+    // Reset previous errors
+    setEmailError('');
+    setPasswordError('');
+
+    if (!email.trim()) {
+      setEmailError('Please enter a valid email or logon.');
+      valid = false;
+    }
+
+    if (!password.trim()) {
+      setPasswordError('Please enter a valid password.');
+      valid = false;
+    }
+
+    if (valid) {
+      await AsyncStorage.setItem('isLoggedIn', 'true');
+      navigation.reset({
+        index: 0, 
+        routes: [{ name: 'BottomTabNavigator' }]
+      })
+    }
+    
   }
 
   return (
@@ -32,21 +54,27 @@ const Login = ({ navigation }) => {
         <TextInput
           placeholder="Email/Logon"
           placeholderTextColor={colors.theme.silver}
-          keyboardType="email-address"
           autoCapitalize="none"
           value={email}
-          onChangeText={setEmail}
-          className="border border-gray-300 rounded-md p-3 mb-3 text-m text-black"
+          onChangeText={(text) => {
+            setEmail(text);
+            setEmailError(''); // Clear error while typing
+          }}
+          className={`border border-gray-300 rounded-md p-3 ${emailError ? 'mb-0' : 'mb-3'} text-m text-black`}
         />
+        {emailError ? <Text className="text-red-600 mb-3 text-sm">{emailError}</Text> : null}
         
-        <View className="border border-gray-300 rounded-md mb-2 flex-row items-center px-3">
+        <View className="border border-gray-300 rounded-md flex-row items-center px-3">
           <TextInput
             placeholder="Password"
             placeholderTextColor={colors.theme.silver}
             secureTextEntry={!showPassword}
             autoCapitalize="none"
             value={password}
-            onChangeText={setPassword}
+            onChangeText={(text) => {
+              setPassword(text);
+              setPasswordError(''); // Clear error while typing
+            }}
             className="flex-1 py-3 text-base text-black"
           />
           <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
@@ -57,10 +85,11 @@ const Login = ({ navigation }) => {
             />
           </TouchableOpacity>
         </View>
+        {passwordError ? <Text className="text-red-600 text-sm">{passwordError}</Text> : null}
         
         {/* Forgot Password */}
-        <TouchableOpacity className='mb-6'>
-          <Text className="text-right text-black text-m mb-6 font-medium">Forgot password?</Text>
+        <TouchableOpacity className='mb-8 mt-2'>
+          <Text className="text-right text-black text-m font-medium">Forgot password?</Text>
         </TouchableOpacity>
 
         <View>
