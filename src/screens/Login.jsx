@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, 
+  ScrollView, ActivityIndicator } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { colors } from '../constants/ColorConstant';
 
 const Login = ({ navigation }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -31,23 +33,31 @@ const Login = ({ navigation }) => {
     }
 
     if (valid) {
+      setIsLoading(true);
       await AsyncStorage.setItem('isLoggedIn', 'true');
+      setIsLoading(false);
       navigation.reset({
         index: 0, 
         routes: [{ name: 'BottomTabNavigator' }]
       })
     }
-    
   }
 
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-      className="flex-1 bg-white"
+      className="flex-1 bg-white relative"
     >
+      {isLoading && (
+        <View className="absolute top-0 left-0 right-0 bottom-0 z-50 justify-center items-center bg-white/70">
+          <ActivityIndicator size="large" color={colors.theme.green} />
+        </View>
+      )}
+      
       <ScrollView
       className="px-6"
-      contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}>
+      contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
+      keyboardShouldPersistTaps="handled">
         {/* Title */}
         <Text className="text-center text-xl font-semibold mb-4">Log in</Text>
 
