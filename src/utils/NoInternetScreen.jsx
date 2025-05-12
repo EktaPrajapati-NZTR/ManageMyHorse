@@ -10,7 +10,7 @@ const NoInternetScreen = ({ onRetry }) => {
       <Icon name="wifi-off" size={80} color ={colors.theme.black} />
 
       {/* Title */}
-      <Text className="text-gold text-2xl font-bold mt-6">
+      <Text className="text-black text-2xl font-bold mt-6">
         No Internet Connection
       </Text>
 
