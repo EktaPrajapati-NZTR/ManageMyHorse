@@ -59,7 +59,7 @@ const Login = ({ navigation }) => {
       contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
       keyboardShouldPersistTaps="handled">
         {/* Title */}
-        <Text className="text-center text-xl font-semibold mb-4">Log in</Text>
+        <Text className="text-center text-xl font-semibold mb-5">Log in</Text>
 
         <TextInput
           placeholder="Email/Logon"
@@ -97,14 +97,9 @@ const Login = ({ navigation }) => {
         </View>
         {passwordError ? <Text className="text-red-600 text-sm">{passwordError}</Text> : null}
         
-        {/* Forgot Password */}
-        <TouchableOpacity className='mb-8 mt-2'>
-          <Text className="text-right text-black text-m font-medium">Forgot password?</Text>
-        </TouchableOpacity>
-
         <View>
           {/* Log in Button */}
-          <TouchableOpacity className="bg-black rounded-full py-3 self-center px-12" 
+          <TouchableOpacity className="bg-black rounded-full py-3 self-center px-12 mt-8" 
             style={{backgroundColor: colors.theme.green}}
             onPress={handleLogin}>
             <Text className="text-center text-white font-semibold">Log in</Text>
