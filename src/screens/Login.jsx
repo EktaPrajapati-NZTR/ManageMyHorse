@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, 
-  ScrollView, ActivityIndicator } from 'react-native';
+  ScrollView, ActivityIndicator, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { colors } from '../constants/ColorConstant';
+import URLConfig from '../constants/UrlConstant';
+import loginApi from '../utils/loginApi';
 
 const Login = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -33,13 +35,40 @@ const Login = ({ navigation }) => {
     }
 
     if (valid) {
-      setIsLoading(true);
-      await AsyncStorage.setItem('isLoggedIn', 'true');
-      setIsLoading(false);
-      navigation.reset({
-        index: 0, 
-        routes: [{ name: 'BottomTabNavigator' }]
-      })
+      try{
+        if (isLoading) return;
+
+        let loginData = {
+          username: email,
+          password: password
+        }
+        setIsLoading(true);
+        const response = await loginApi.post(URLConfig.LOGIN.Login(), loginData);
+
+        if (response.status === 200 && response.data?.contactDetails) {
+          const userInfo = {
+            ...response.data.contactDetails,
+            username: loginData.username
+          };
+          console.log("userInfo: ", userInfo);
+          await AsyncStorage.setItem('LoggedInUserInfo', JSON.stringify(userInfo));
+          await AsyncStorage.setItem('isLoggedIn', 'true');
+
+          navigation.reset({
+            index: 0, 
+            routes: [{ name: 'BottomTabNavigator' }]
+          })
+        }
+      }catch(error){
+        console.log(error.response);
+        if(error && error.response && error.response.status == 500){
+          Alert.alert('Login Failed', 'Invalid username or password.');
+        }else{
+          Alert.alert('Login Failed', 'An error occurred during login. Please try again.');
+        }
+      }finally{
+        setIsLoading(false);
+      }
     }
   }
 
