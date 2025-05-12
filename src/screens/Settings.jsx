@@ -1,9 +1,11 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, ScrollView, Image } from 'react-native';
+import React,{useState} from 'react';
+import { View, Text, TouchableOpacity, ActivityIndicator, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { colors } from '../constants/ColorConstant';
+import URLConfig from '../constants/UrlConstant';
+import loginApi from '../utils/loginApi';
 
 const InfoRow = ({ icon, text }) => (
   <View className="flex-row items-center border-b border-gray-200 py-9 px-6">
@@ -13,6 +15,8 @@ const InfoRow = ({ icon, text }) => (
 );
 
 const Settings = ({ navigation }) => {
+  const [isLoading, setIsLoading] = useState(false);
+  
   const user = {
     firstName: 'Ekta',
     lastName: 'Prajapati',
@@ -22,9 +26,35 @@ const Settings = ({ navigation }) => {
   };
   const fullName = `${user.firstName} ${user.lastName}`;
 
-  const handleLogout = async() =>{
+  const performLogout = async () => {
     await AsyncStorage.setItem('isLoggedIn', 'false');
-    navigation.navigate("Login", { screen: "Login" })
+    await AsyncStorage.removeItem('LoggedInUserInfo');
+  
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Login' }],
+    });
+  };
+
+  const handleLogout = async() => {
+    try{
+      if (isLoading) return;
+
+      setIsLoading(true);
+      const response = await loginApi.get(URLConfig.LOGIN.Logout());
+      if (response && response.status === 200){
+        await performLogout();
+      }
+    }catch(error){
+      if (error.response && error.response.status === 401) {
+        await performLogout();
+      } else {
+        Alert.alert("Logout Failed", "Something went wrong. Please try again.");
+      }
+    }finally{
+      setIsLoading(false);
+    }
+    
   }
 
   return (
