@@ -58,7 +58,14 @@ const Settings = ({ navigation }) => {
   }
 
   return (
-      <View className="flex-1 bg-white">
+      <View className="flex-1 bg-white relative">
+
+        {isLoading && (
+          <View className="absolute top-0 left-0 right-0 bottom-0 z-50 justify-center items-center bg-white/70">
+            <ActivityIndicator size="large" color={colors.theme.green} />
+          </View>
+        )}
+
         <View className="h-36 justify-center items-center mt-10">
           <Image
             source={require('../assets/user_default_profile_photo.png')}
