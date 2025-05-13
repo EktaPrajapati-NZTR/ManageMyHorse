@@ -85,7 +85,6 @@ const Settings = ({ navigation }) => {
       <View className="mt-2">
         <InfoRow icon="user" text={userInfo ? userInfo.fullName : '-'} />
         <InfoRow icon="mail" text={userInfo? userInfo.emailAddress : '-'} />
-        <InfoRow icon="info" text="1.0.1" />
       </View>
   
       <TouchableOpacity className="mt-8 px-12 py-3 rounded-full self-center"
