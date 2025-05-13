@@ -45,12 +45,12 @@ const Login = ({ navigation }) => {
         setIsLoading(true);
         const response = await loginApi.post(URLConfig.LOGIN.Login(), loginData);
 
-        if (response.status === 200 && response.data?.contactDetails) {
+        if (response && response.status === 200 && response.data?.contactDetails) {
           const userInfo = {
             ...response.data.contactDetails,
             username: loginData.username
           };
-          
+
           await AsyncStorage.setItem('LoggedInUserInfo', JSON.stringify(userInfo));
           await AsyncStorage.setItem('isLoggedIn', 'true');
 
