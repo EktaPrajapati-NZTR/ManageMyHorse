@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{ useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, ActivityIndicator, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -16,15 +16,24 @@ const InfoRow = ({ icon, text }) => (
 
 const Settings = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [userInfo, setUserInfo] = useState(null);
   
-  const user = {
-    firstName: 'Ekta',
-    lastName: 'Prajapati',
-    email: 'ekta@example.com',
-    dob: '27 August 1994',
-    region: 'Waikato'
-  };
-  const fullName = `${user.firstName} ${user.lastName}`;
+  useEffect(() => {
+    const loadUserInfo = async () => {
+      try {
+        const userInfoString = await AsyncStorage.getItem('LoggedInUserInfo');
+        const parsedUserInfo = userInfoString ? JSON.parse(userInfoString) : null;
+        if (parsedUserInfo) {
+          parsedUserInfo.fullName = `${parsedUserInfo.firstName} ${parsedUserInfo.lastName}`;
+        }
+        setUserInfo(parsedUserInfo);
+      } catch (error) {
+        console.error('Failed to load user info:', error);
+      }
+    };
+
+    loadUserInfo();
+  }, []);
 
   const performLogout = async () => {
     await AsyncStorage.setItem('isLoggedIn', 'false');
@@ -74,10 +83,9 @@ const Settings = ({ navigation }) => {
         </View>
   
       <View className="mt-2">
-        <InfoRow icon="user" text={fullName} />
-        <InfoRow icon="mail" text={user.email} />
-        <InfoRow icon="calendar" text={user.dob} />
-        <InfoRow icon="map-pin" text={user.region} />
+        <InfoRow icon="user" text={userInfo ? userInfo.fullName : '-'} />
+        <InfoRow icon="mail" text={userInfo? userInfo.emailAddress : '-'} />
+        <InfoRow icon="info" text="1.0.1" />
       </View>
   
       <TouchableOpacity className="mt-8 px-12 py-3 rounded-full self-center"
