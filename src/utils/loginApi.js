@@ -1,7 +1,7 @@
 import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import URLConfig from '../constants/UrlConstant';
+import { getLoggedInUserInfo } from '../utils/helper';
 
 const loginApi = axios.create({
     
@@ -15,8 +15,7 @@ const loginApi = axios.create({
 
 loginApi.interceptors.request.use(async (config) => {
 
-    const userInfoString = await AsyncStorage.getItem('LoggedInUserInfo');
-    const userInfo = userInfoString ? JSON.parse(userInfoString) : null;
+    const userInfo = await getLoggedInUserInfo();
     const authToken = userInfo?.apiKey;
 
     if (authToken) {

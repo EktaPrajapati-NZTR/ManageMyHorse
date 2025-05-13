@@ -67,5 +67,10 @@ import { clearHorseLocations } from '../utils/database';
     return () => backHandler.remove();
   };
 
+  export const getLoggedInUserInfo = async() =>{
+    const userInfoString = await AsyncStorage.getItem('LoggedInUserInfo');
+    const userInfo = userInfoString ? JSON.parse(userInfoString) : null;
+    return userInfo;
+  }
   
   

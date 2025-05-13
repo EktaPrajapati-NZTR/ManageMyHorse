@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { colors } from '../constants/ColorConstant';
 import URLConfig from '../constants/UrlConstant';
 import loginApi from '../utils/loginApi';
+import { getLoggedInUserInfo } from '../utils/helper';
 
 const InfoRow = ({ icon, text }) => (
   <View className="flex-row items-center border-b border-gray-200 py-9 px-6">
@@ -21,8 +22,7 @@ const Settings = ({ navigation }) => {
   useEffect(() => {
     const loadUserInfo = async () => {
       try {
-        const userInfoString = await AsyncStorage.getItem('LoggedInUserInfo');
-        const parsedUserInfo = userInfoString ? JSON.parse(userInfoString) : null;
+        const parsedUserInfo = await getLoggedInUserInfo();
         if (parsedUserInfo) {
           parsedUserInfo.fullName = `${parsedUserInfo.firstName} ${parsedUserInfo.lastName}`;
         }
