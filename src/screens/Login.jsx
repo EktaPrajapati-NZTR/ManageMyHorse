@@ -50,7 +50,7 @@ const Login = ({ navigation }) => {
             ...response.data.contactDetails,
             username: loginData.username
           };
-          console.log("userInfo: ", userInfo);
+          
           await AsyncStorage.setItem('LoggedInUserInfo', JSON.stringify(userInfo));
           await AsyncStorage.setItem('isLoggedIn', 'true');
 
@@ -60,7 +60,6 @@ const Login = ({ navigation }) => {
           })
         }
       }catch(error){
-        console.log(error.response);
         if(error && error.response && error.response.status == 500){
           Alert.alert('Login Failed', 'Invalid username or password.');
         }else{
