@@ -17,6 +17,7 @@ import usePermission from "../../hooks/usePermission";
 import useLocation from "../../hooks/useLocation";
 import { permission } from "../../utils/permissions";
 import { saveAllHorseLocations } from "../../utils/database";
+import { getLoggedInUserInfo } from '../../utils/helper'
 import "../../../global.css";
 
 const MicrochipScan = () => {
@@ -32,6 +33,7 @@ const MicrochipScan = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showTipCheck, setTipCheck] = useState(false);
   const [showTipCross, setTipCross] = useState(false);
+  const [userInfo, setUserInfo] = useState(null);
   const {permissionStatus, checkPermissionStatus, checkAndRequestPermission, handleBlockedPermission} = usePermission(permission.location);
   const { getLocation } = useLocation();
 
@@ -111,7 +113,7 @@ const MicrochipScan = () => {
           const { latitude, longitude } = position.coords;
           setScannedMicrochips((prev) => [
             ...prev,
-            { microchipNumber: newMicrochip, isRegistered: null, Latitude: latitude, Longitude: longitude, Timestamp: new Date().toISOString() },
+            { microchipNumber: newMicrochip, isRegistered: null, Latitude: latitude, Longitude: longitude, Timestamp: new Date().toISOString(), ContactID: userInfo.contactID },
           ]);
           setInputValue("");
           // setTimeout(() => {
@@ -224,6 +226,14 @@ const MicrochipScan = () => {
     );
   });
 
+  useEffect(() => {
+    const loadUserInfo = async() => {
+      const loggedInUserInfo = await getLoggedInUserInfo();
+      setUserInfo(loggedInUserInfo);
+      }
+    loadUserInfo();
+  }, []);
+  
   useEffect(() => {
   checkAndRestoreStorageData();
   }, [isInternetReachable]);
