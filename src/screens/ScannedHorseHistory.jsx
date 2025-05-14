@@ -4,7 +4,6 @@ import { useFocusEffect } from "@react-navigation/native";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/FontAwesome'; 
 
-import { getAllHorseLocations } from "../utils/database"
 import api from "../utils/api";
 import { colors } from "../constants/ColorConstant";
 import URLConfig from "../constants/UrlConstant";

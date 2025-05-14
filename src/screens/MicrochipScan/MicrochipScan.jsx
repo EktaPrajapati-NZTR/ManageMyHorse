@@ -16,7 +16,6 @@ import { useNetwork } from "../../hooks/useNetwork";
 import usePermission from "../../hooks/usePermission";
 import useLocation from "../../hooks/useLocation";
 import { permission } from "../../utils/permissions";
-import { saveAllHorseLocations } from "../../utils/database";
 import { getLoggedInUserInfo } from '../../utils/helper'
 import "../../../global.css";
 
@@ -189,7 +188,6 @@ const MicrochipScan = () => {
 
         const microchipsWithStatus = response.data.data || [];
         setScannedMicrochips(microchipsWithStatus);
-        await saveAllHorseLocations(microchipsWithStatus);
         const hasUnregisteredMicrochip  = microchipsWithStatus.some(chip => chip.isRegistered === false);
         Alert.alert("Success", 
           hasUnregisteredMicrochip
