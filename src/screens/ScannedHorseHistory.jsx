@@ -1,16 +1,20 @@
 import React,{ useCallback, useState, useMemo, useEffect } from "react";
-import { View, Text, FlatList, ActivityIndicator, Platform, TouchableOpacity } from "react-native";
+import { View, Text, FlatList, ActivityIndicator, Platform, TouchableOpacity, Alert } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/FontAwesome'; 
 
 import { getAllHorseLocations } from "../utils/database"
+import api from "../utils/api";
 import { colors } from "../constants/ColorConstant";
+import URLConfig from "../constants/UrlConstant";
+
+import { getLoggedInUserInfo } from '../utils/helper';
 import { convertUTCDateTimeToLocalDateTime, convertAndFormatUTCDateToLocalDate, formatDateToDDMMYYYY } from "../utils/helper";
 
 const ScannedHorseHistory = () => {
 
-    const defaultDate = new Date();
+    const defaultDate = useMemo(() => new Date(), []);
     const [selectedDate, setSelectedDate] = useState(defaultDate);
     const [history, setHistory] = useState([]);
     const [showPicker, setShowPicker] = useState(false);
@@ -49,20 +53,58 @@ const ScannedHorseHistory = () => {
         return data;
       }, [selectedDate, history, dateFilterEnabled]);
 
+    const getHistory = async (contactID) => {
+        if (!contactID) return;
+
+        try{
+            setIsLoading(true);
+            const response = await api.get(
+                URLConfig.MICROCHIP.GetScannedHorsesByContactID(contactID)
+            );
+            if (response?.data?.success) {
+                let scannedHorseHistory = response.data.data;
+                setHistory(scannedHorseHistory);
+            } else {
+                setHistory([]);
+            }
+        }catch (error) {
+            if (!error.response) {
+                Alert.alert("Network Error","Failed to get scanned horse history");
+            } else {
+                Alert.alert(error.response?.data?.message || "Access Denied - Your API key is invalid or expired.");
+            }
+        }finally {
+            setIsLoading(false);
+        }
+    }
+
     useFocusEffect(
         useCallback(() => {
-            const fetchHistory = async () => {
-                const scannedHorseHistory = await getAllHorseLocations();
-                setHistory(scannedHorseHistory);
-            };
 
-            setIsLoading(true);
-            fetchHistory();
-            setIsLoading(false);
+          // Use this variable to avoid unnecessary calls  
+          let isActive = true;
+      
+          const fetchHistory = async () => {
+            const userInfo = await getLoggedInUserInfo();
+            if (userInfo?.contactID && isActive) {
+              getHistory(userInfo.contactID);
+            }
+            if (isActive) {
+              setSelectedDate(defaultDate);
+              setDateFilterEnabled(false);
+            }
+          };
+      
+          fetchHistory();
+      
+          return () => {
+            isActive = false;
+          };
         }, [])
-    );
+    );      
 
     const clearFilters = () => {
+        setDateFilterEnabled(false);
         setSelectedDate(defaultDate);
     };
 
