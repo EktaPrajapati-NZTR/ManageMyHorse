@@ -213,16 +213,51 @@ const MicrochipScan = () => {
   }
 
   //Hook to handle back navigation
-  usePreventRemove(scannedMicrochips.length > 0, ({ data }) => {
-    Alert.alert(
-      "You have scanned data",
-      "Do you want to discard scanned microchips and go back?",
-      [
-        { text: "Stay", style: "cancel" },
-        { text: "Go Back", onPress: () => navigation.dispatch(data.action) },
-      ]
-    );
-  });
+  // usePreventRemove(scannedMicrochips.length > 0, ({ data }) => {
+  //   Alert.alert(
+  //     "You have scanned data",
+  //     "Do you want to discard scanned microchips and go back?",
+  //     [
+  //       { text: "Stay", style: "cancel" },
+  //       { text: "Go Back", onPress: () => navigation.dispatch(data.action) },
+  //     ]
+  //   );
+  // });
+
+  // Use useEffect instead of usePreventRemove to 
+  // prevent navigation alert from showing on logout or reset
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('beforeRemove', (e) => {
+      if (scannedMicrochips.length === 0) {
+        return;
+      }
+  
+      // Allow logout/navigation reset without alert
+      const targetRoute = e.data.action?.payload?.routes?.[0]?.name;
+      if (e.data.action.type === 'RESET' && targetRoute === 'Login') {
+        return;
+      }
+  
+      // Allow logout if navigating to Login in any way
+      if (e.data.action?.type === 'NAVIGATE' && e.data.action.payload?.name === 'Login') {
+        return;
+      }
+  
+      // Block other navigation with alert
+      e.preventDefault();
+  
+      Alert.alert(
+        "You have scanned data",
+        "Do you want to discard scanned microchips and go back?",
+        [
+          { text: "Stay", style: "cancel" },
+          { text: "Go Back", onPress: () => navigation.dispatch(e.data.action) },
+        ]
+      );
+    });
+  
+    return unsubscribe;
+  }, [navigation, scannedMicrochips]);  
 
   useEffect(() => {
     const loadUserInfo = async() => {
