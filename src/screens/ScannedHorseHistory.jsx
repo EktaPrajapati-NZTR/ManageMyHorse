@@ -120,7 +120,7 @@ const ScannedHorseHistory = () => {
         <View className="flex-1 bg-white px-4 pt-3">
             <View className="justify-between mb-1">
                 <View className="flex-col">
-                    <Text className="pl-1 mb-1 font-semibold">Select Date: </Text>
+                    {/* <Text className="pl-1 mb-1 font-semibold">Select Date: </Text> */}
 
                     <View className="flex-row items-center rounded-lg border border-gray-400 bg-white px-3 py-2">
                         <Icon name="calendar" size={18} color="gray" />
@@ -132,7 +132,7 @@ const ScannedHorseHistory = () => {
                             activeOpacity={0.8}
                         >
                        <Text className="text-black text-base">
-                        {formatDateToDDMMYYYY(selectedDate)}
+                       {dateFilterEnabled ? formatDateToDDMMYYYY(selectedDate) : 'Select Date'}
                         </Text>
 
                         </TouchableOpacity>
