@@ -73,7 +73,7 @@ const HorseDetail = ({ route }) => {
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
           {horseData ? (
             <View>
-              <Text className="text-2xl font-bold mb-4 text-center">{horseData.horseName || horseData.appDisplayName}</Text>
+              <Text className="text-2xl font-bold mb-4 text-center">{horseData.horseName || horseData.appDisplayName || '-'}</Text>
 
               <View className="bg-gray-100 p-4 rounded-lg">
                 <Text className="text-base font-semibold p-2">Age year: {horseData.ageYear || '-'}</Text>
