@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
+import { BackHandler } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 
 import AppStackNavigator from './src/navigation/AppStackNavigator';
-import { disableHardwareBack } from './src/utils/helper';
 
 const App = () => {
 
   useEffect(() => {
     const initApp = async () => {
       try {
-        disableHardwareBack();
+        // Preventing to go back by disabling hardware back.
+        const backHandler = BackHandler.addEventListener('hardwareBackPress', () => true);
+        return () => backHandler.remove();
       } catch (error) {
         console.error('Error initializing DB:', error);
       } finally {

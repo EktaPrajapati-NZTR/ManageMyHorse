@@ -1,4 +1,3 @@
-import { BackHandler } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
   export const formatDateToDDMMYYYY = (date) => {
@@ -39,13 +38,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
     const year = date.getFullYear();
   
     return `${year}-${month}-${day}`;
-  };
-
-  // Preventing to go back by disabling hardware back.
-  export const disableHardwareBack = () => {
-    const backAction = () => true; 
-    const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
-    return () => backHandler.remove();
   };
 
   export const getLoggedInUserInfo = async() =>{
