@@ -9,7 +9,9 @@ import { colors } from "../constants/ColorConstant";
 import URLConfig from "../constants/UrlConstant";
 
 import { getLoggedInUserInfo } from '../utils/helper';
-import { convertUTCDateTimeToLocalDateTime, convertAndFormatUTCDateToLocalDate, formatDateToDDMMYYYY } from "../utils/helper";
+import { convertUTCDateTimeToLocalDateTime, convertAndFormatUTCDateToLocalDate, 
+    formatDateToDDMMYYYY, getAddressFromLatLong
+ } from "../utils/helper";
 
 const ScannedHorseHistory = () => {
 
@@ -44,7 +46,7 @@ const ScannedHorseHistory = () => {
         const selectedLocalDate = convertAndFormatUTCDateToLocalDate(selectedDate);
         
         const data = history?.filter(item => {
-            const localDate = convertAndFormatUTCDateToLocalDate(item.timestamp)
+            const localDate = convertAndFormatUTCDateToLocalDate(item.timestamp);
             return localDate === selectedLocalDate;
         }) || [];
 
@@ -62,7 +64,17 @@ const ScannedHorseHistory = () => {
             );
             if (response?.data?.success) {
                 let scannedHorseHistory = response.data.data;
-                setHistory(scannedHorseHistory);
+
+                const updatedHistory = await Promise.all(
+                    scannedHorseHistory.map(async (item) => {
+                        if (item.latitude != null && item.longitude != null && !item.address) {
+                            const address = await getAddressFromLatLong(item.latitude, item.longitude);
+                            return { ...item, address };
+                        }
+                        return item; // Return original if address already present or no coordinates
+                    })
+                );
+                setHistory(updatedHistory);
             } else {
                 setHistory([]);
             }
@@ -111,7 +123,13 @@ const ScannedHorseHistory = () => {
         <View className="bg-white m-2 p-4 rounded-2xl shadow-md border border-gray-200">
           <Text className="text-base font-semibold mt-1">Microchip: {item.microchipNumber ? item.microchipNumber : '-'}</Text>
           <Text className="text-base font-semibold mt-1">Horse name: {item.horseName || item.horseAppDisplayName || '-'}</Text>
-          <Text className="text-base font-semibold mt-1">Scanned Location: {item.latitude && item.longitude ? `${item.latitude.toFixed(4)}, ${item.longitude.toFixed(4)}` : '-'}</Text>
+          <Text className="text-base font-semibold mt-1">{'Scanned Location: '}
+            {item?.address
+                ? item.address
+                : item?.latitude != null && item?.longitude != null
+                ? `${item.latitude.toFixed(4)}, ${item.longitude.toFixed(4)}`
+                : "-"}
+          </Text>
           <Text className="text-base font-semibold mt-1">Scanned datetime: {item.timestamp ? convertUTCDateTimeToLocalDateTime(item.timestamp) : '-'}</Text>
         </View>
     );

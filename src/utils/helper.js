@@ -1,4 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+
+const TOMTOM_API_KEY = 'hH6gZt3w4dDOnyCgK0EeDMGYqiwaCVYG';
 
   export const formatDateToDDMMYYYY = (date) => {
     const day = String(date.getDate()).padStart(2, "0");
@@ -45,5 +48,21 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
     const userInfo = userInfoString ? JSON.parse(userInfoString) : null;
     return userInfo;
   }
+
+  export const getAddressFromLatLong = async (latitude, longitude) => {
+
+    if (latitude == null || longitude == null) {
+      return null;
+    }
+
+    const url = `https://api.tomtom.com/search/2/reverseGeocode/${latitude},${longitude}.json?key=${TOMTOM_API_KEY}`;
+    try {
+      const response = await axios.get(url);
+      const address = response.data?.addresses?.[0]?.address?.freeformAddress;
+      return address || null;
+    } catch (error) {
+      return null;
+    }
+  };
   
   

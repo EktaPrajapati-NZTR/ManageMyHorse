@@ -11,7 +11,7 @@ import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import api from "../utils/api";
 import URLConfig from "../constants/UrlConstant";
 import { colors } from "../constants/ColorConstant";
-import {convertUTCDateTimeToLocalDateTime} from "../utils/helper";
+import {convertUTCDateTimeToLocalDateTime, getAddressFromLatLong} from "../utils/helper";
 import { useNetwork } from "../hooks/useNetwork";
 import NoInternetScreen from "../utils/NoInternetScreen";
 
@@ -34,7 +34,9 @@ const HorseDetail = ({ route }) => {
 
       if (response?.data?.success) {
         let updatedData = { ...response.data.data };
-        setHorseData(updatedData); 
+        const address = await getAddressFromLatLong(updatedData.latitude, updatedData.longitude);
+        updatedData.address = address;
+        setHorseData(updatedData);
       } else {
         setHorseData(null);
         setHorseMessage(response.data.message || "Failed to get horse data");
@@ -86,7 +88,12 @@ const HorseDetail = ({ route }) => {
                 <Text className="text-base font-semibold p-2">Dam: {horseData.damName || '-'}</Text>
                 <Text className="text-base font-semibold p-2">Sire: {horseData.sireName || '-'}</Text>
                 <Text className="text-base font-semibold p-2">
-                  Last Location: {horseData.latitude && horseData.longitude ? `${horseData.latitude.toFixed(4)}, ${horseData.longitude.toFixed(4)}` : "-"}
+                  Last Location:{" "}
+                  {horseData?.address
+                    ? horseData.address
+                    : horseData?.latitude != null && horseData?.longitude != null
+                    ? `${horseData.latitude.toFixed(4)}, ${horseData.longitude.toFixed(4)}`
+                    : "-"}
                 </Text>
                 <Text className="text-base font-semibold p-2">Last recorded time: {horseData.timestamp ? convertUTCDateTimeToLocalDateTime(horseData.timestamp) : '-'}</Text>
               </View>
