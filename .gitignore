@@ -73,3 +73,6 @@ yarn-error.log
 # Custom build/output directories
 build/
 output/
+
+# App key file
+appKeys.js
