@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
-const TOMTOM_API_KEY = 'hH6gZt3w4dDOnyCgK0EeDMGYqiwaCVYG';
+import { TOMTOM_API_KEY } from '../../appKeys';
 
   export const formatDateToDDMMYYYY = (date) => {
     const day = String(date.getDate()).padStart(2, "0");

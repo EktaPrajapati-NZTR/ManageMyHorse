@@ -2,6 +2,7 @@ import axios from 'axios';
 
 import URLConfig from '../constants/UrlConstant';
 import { getLoggedInUserInfo } from '../utils/helper';
+import { Login_API_KEY } from '../../appKeys';
 
 const loginApi = axios.create({
     
@@ -9,7 +10,7 @@ const loginApi = axios.create({
     headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'API-Key': 'secretsquirrel'
+        'API-Key': Login_API_KEY
     },
 });
 

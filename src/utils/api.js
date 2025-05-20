@@ -1,13 +1,15 @@
 import axios from 'axios';
 import { Alert } from "react-native";
+
 import URLConfig from '../constants/UrlConstant';
+import { IdMyTb_API_KEY } from '../../appKeys';
 
 const api = axios.create({
     baseURL: URLConfig.BASE_URL,
     headers:{
         'Content-Type':'application/json',
         'Accept': 'application/json',
-        'IdMyTb-api-key': 'Hi^vcik`By'
+        'IdMyTb-api-key': IdMyTb_API_KEY
     }
 });
 
