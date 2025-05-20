@@ -13,7 +13,6 @@ const App = () => {
         const backHandler = BackHandler.addEventListener('hardwareBackPress', () => true);
         return () => backHandler.remove();
       } catch (error) {
-        console.error('Error initializing DB:', error);
       } finally {
         SplashScreen.hide(); // hide only after everything is ready
       }
