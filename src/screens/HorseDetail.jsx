@@ -105,7 +105,7 @@ const HorseDetail = ({ route }) => {
                 className="mt-4 bg-black px-6 py-2 rounded-full"
                 onPress={() => navigation.navigate("Scan", { screen: "MicrochipScan" })}
               >
-                <Text className="text-white font-semibold">Go back</Text>
+                <Text className="text-white text-center font-semibold">Go back</Text>
               </TouchableOpacity>
             </View>
           )}
