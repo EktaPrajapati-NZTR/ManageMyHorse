@@ -127,7 +127,7 @@ const Login = ({ navigation }) => {
         
         <View>
           {/* Log in Button */}
-          <TouchableOpacity className="bg-black rounded-full py-3 self-center px-12 mt-8" 
+          <TouchableOpacity className="rounded-full py-3 self-center px-12 mt-8" 
             style={{backgroundColor: colors.theme.green}}
             onPress={handleLogin}>
             <Text className="text-center text-white font-semibold">Log in</Text>
