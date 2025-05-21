@@ -141,7 +141,7 @@ const ScannedHorseHistory = () => {
                     {/* <Text className="pl-1 mb-1 font-semibold">Select Date: </Text> */}
 
                     <View className="flex-row items-center rounded-lg border border-gray-400 bg-white px-3 py-2">
-                        <Icon name="calendar" size={18} color="gray" />
+                        <Icon name="calendar" size={18} color={colors.theme.green} />
 
                         {/* Date Display (opens picker) */}
                         <TouchableOpacity
