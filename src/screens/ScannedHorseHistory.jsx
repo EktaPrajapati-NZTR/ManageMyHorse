@@ -123,14 +123,14 @@ const ScannedHorseHistory = () => {
         <View className="bg-white m-2 p-4 rounded-2xl shadow-md border border-gray-200">
           <Text className="text-base font-semibold mt-1">Microchip: {item.microchipNumber ? item.microchipNumber : '-'}</Text>
           <Text className="text-base font-semibold mt-1">Horse name: {item.horseName || item.horseAppDisplayName || '-'}</Text>
-          <Text className="text-base font-semibold mt-1">{'Scanned Location: '}
+          <Text className="text-base font-semibold mt-1">Scanned on: {item.timestamp ? convertUTCDateTimeToLocalDateTime(item.timestamp) : '-'}</Text>
+          <Text className="text-base font-semibold mt-1">{'Scanned location: '}
             {item?.address
                 ? item.address
                 : item?.latitude != null && item?.longitude != null
                 ? `${item.latitude.toFixed(4)}, ${item.longitude.toFixed(4)}`
                 : "-"}
           </Text>
-          <Text className="text-base font-semibold mt-1">Scanned datetime: {item.timestamp ? convertUTCDateTimeToLocalDateTime(item.timestamp) : '-'}</Text>
         </View>
     );
 
