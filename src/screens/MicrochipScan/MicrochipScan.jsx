@@ -400,11 +400,16 @@ const MicrochipScan = () => {
 
                 <View className={`flex-row justify-between mt-auto mb-2 gap-2 ${isLandscape ? "flex-wrap" : ""}`}>
                   <TouchableOpacity
-                    className={`rounded-full py-3 flex-1 min-w-[150px] items-center ${isLoading || scannedMicrochips.length == 0 ? "bg-gray-400" : "bg-black"}`}
+                    className={`rounded-full py-3 flex-1 min-w-[150px] items-center ${isLoading || scannedMicrochips.length == 0 ? "bg-gray-400" : ""}`}
+                     style={
+                          !(isLoading || scannedMicrochips.length == 0)
+                            ? { backgroundColor: colors.theme.green }
+                            : {}
+                      }
                     disabled={isLoading || scannedMicrochips.length == 0}
                     onPress={() => {isInternetReachable ? saveHorseDetails(null) : saveScannedMicrochipsToAsyncStorage()}}
                   >
-                    <Text className="text-white text-lg">{isInternetReachable ? "Save" : "Save for Later"}</Text>
+                    <Text className="text-center text-white font-semibold">{isInternetReachable ? "Save" : "Save for Later"}</Text>
                   </TouchableOpacity>
 
                   <TouchableOpacity
@@ -412,7 +417,7 @@ const MicrochipScan = () => {
                     disabled={isLoading || scannedMicrochips.length == 0}
                     onPress={clearMicrochips}
                   >
-                    <Text className={`${isLoading || scannedMicrochips.length == 0 ? "text-white" : "text-black"} text-lg`}>Clear</Text>
+                    <Text className={`${isLoading || scannedMicrochips.length == 0 ? "text-white" : "text-black"} text-center font-semibold`}>Clear</Text>
                   </TouchableOpacity>
                 </View>
               </>
