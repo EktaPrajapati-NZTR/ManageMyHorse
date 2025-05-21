@@ -75,14 +75,14 @@ const Settings = ({ navigation }) => {
           </View>
         )}
 
-        <View className="h-36 justify-center items-center mt-10">
+        {/* <View className="h-36 justify-center items-center mt-10">
           <Image
             source={require('../assets/user_default_profile_photo.png')}
             className="w-36 h-36 rounded-full"
           />
-        </View>
+        </View> */}
   
-      <View className="mt-2">
+      <View>
         <InfoRow icon="user" text={userInfo ? userInfo.fullName : '-'} />
         <InfoRow icon="mail" text={userInfo? userInfo.emailAddress : '-'} />
       </View>
@@ -90,7 +90,7 @@ const Settings = ({ navigation }) => {
       <TouchableOpacity className="mt-8 px-12 py-3 rounded-full self-center"
         style={{backgroundColor: colors.theme.green}}
         onPress={handleLogout}>
-        <Text className="text-white text-base font-semibold">Logout</Text>
+        <Text className="text-white text-center font-semibold">Logout</Text>
       </TouchableOpacity>
     </View>
     );
