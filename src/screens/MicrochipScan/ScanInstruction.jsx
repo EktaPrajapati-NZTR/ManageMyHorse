@@ -2,6 +2,7 @@ import React, {useEffect, useRef, useState } from "react";
 import { View, Text, TouchableOpacity,useWindowDimensions, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
+import { colors } from '../../constants/ColorConstant';
 import "../../../global.css";
 
 const ScanInstruction = () => {
@@ -38,12 +39,8 @@ const ScanInstruction = () => {
         {/* Button and Instruction Text at Bottom */}
         <View className="mb-12">
           <TouchableOpacity
-            className="bg-black rounded-full flex items-center justify-center"
-            style={{
-              height: 45,
-              width: isPortrait ? "100%" : "60%",
-              alignSelf: "center",
-            }}
+            className="rounded-full flex self-center px-10 py-3"
+            style={{ backgroundColor: colors.theme.green }}
             onPress={() => navigation.navigate("MicrochipScan")}
           >
             <Text className="text-white font-semibold" style={{ fontSize: isPortrait ? 18 : 16 }}>
