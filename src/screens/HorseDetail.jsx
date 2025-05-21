@@ -87,15 +87,14 @@ const HorseDetail = ({ route }) => {
                 <Text className="text-base font-semibold p-2">Trainer: {horseData.trainerName || '-'}</Text>
                 <Text className="text-base font-semibold p-2">Dam: {horseData.damName || '-'}</Text>
                 <Text className="text-base font-semibold p-2">Sire: {horseData.sireName || '-'}</Text>
-                <Text className="text-base font-semibold p-2">
-                  Last Location:{" "}
+                <Text className="text-base font-semibold p-2">Scanned on: {horseData.timestamp ? convertUTCDateTimeToLocalDateTime(horseData.timestamp) : '-'}</Text>
+                <Text className="text-base font-semibold p-2">{'Scanned location: '}
                   {horseData?.address
                     ? horseData.address
                     : horseData?.latitude != null && horseData?.longitude != null
                     ? `${horseData.latitude.toFixed(4)}, ${horseData.longitude.toFixed(4)}`
                     : "-"}
                 </Text>
-                <Text className="text-base font-semibold p-2">Last recorded time: {horseData.timestamp ? convertUTCDateTimeToLocalDateTime(horseData.timestamp) : '-'}</Text>
               </View>
             </View>
           ) : (
