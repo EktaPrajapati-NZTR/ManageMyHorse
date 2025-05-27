@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { BackHandler } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 
-import AppStackNavigator from './src/navigation/AppStackNavigator';
+import AppNavigator from './src/navigation/AppNavigator';
 
 const App = () => {
 
@@ -22,7 +22,7 @@ const App = () => {
   }, []);  
 
   return (
-    <AppStackNavigator />
+    <AppNavigator />
   );
 };
 
