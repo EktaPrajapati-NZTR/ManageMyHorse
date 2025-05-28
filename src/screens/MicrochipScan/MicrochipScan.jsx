@@ -25,7 +25,6 @@ const MicrochipScan = () => {
   const [isPressed, setIsPressed] = useState(false);
   const navigation = useNavigation();
   const { width, height } = useWindowDimensions(); // Get dynamic screen dimensions
-  const isLandscape = width > height; // Check if the device is in landscape mode
 
   const [scannedMicrochips, setScannedMicrochips] = useState([]);
   const [inputValue, setInputValue] = useState("");
@@ -347,10 +346,10 @@ const MicrochipScan = () => {
                     }}
                 />
               <View className="w-full">
-                  <Text className="text-[14x] font-semibold text-wrap">Please keep enable location service to scan the microchip.</Text>
+                  <Text className="text-[14x] font-semibold text-wrap">Please keep enable location service to scan.</Text>
               </View>
                 {scannedMicrochips.length > 0 && (
-                  <View className={`flex-1 mt-2 mb-2 border border-gray-300 rounded-lg p-2 ${isLandscape ? "h-48" : "h-80"}`}>
+                  <View className={`flex-1 mt-2 mb-2 border border-gray-300 rounded-lg p-2 h-80`}>
                     <ScrollView showsVerticalScrollIndicator={true}>
                       {scannedMicrochips.map((chip, index) => (
                         <View key={index} className="flex-row items-center bg-gray-100 rounded-lg p-3 my-1">
@@ -398,7 +397,7 @@ const MicrochipScan = () => {
                   </View>
                 )}
 
-                <View className={`flex-row justify-between mt-auto mb-2 gap-2 ${isLandscape ? "flex-wrap" : ""}`}>
+                <View className={`flex-row justify-between mt-auto mb-2 gap-2`}>
                   <TouchableOpacity
                     className={`rounded-full py-3 flex-1 min-w-[150px] items-center ${isLoading || scannedMicrochips.length == 0 ? "bg-gray-400" : ""}`}
                      style={
