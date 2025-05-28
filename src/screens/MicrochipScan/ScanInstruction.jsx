@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState } from "react";
+import React from "react";
 import { View, Text, TouchableOpacity,useWindowDimensions, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
@@ -7,31 +7,23 @@ import "../../../global.css";
 
 const ScanInstruction = () => {
   const navigation = useNavigation();
-  const { width, height } = useWindowDimensions(); // Get dynamic screen dimensions
-  const isPortrait = height > width; // Check if the device is in landscape mode
 
   return (
-    <ScrollView className="flex-1 bg-white" contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', paddingHorizontal: isPortrait ? 10 : 12 }}>
+    <ScrollView className="flex-1 bg-white" contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', paddingHorizontal: 10 }}>
         {/* Instruction Text */}
         <View className="flex-1 justify-center mb-6">
           <View className="items-center mb-6">
-            <Text
-              className="text-center text-black"
-              style={{ fontSize: isPortrait ? 20 : 18 }}
-            >
+            <Text className="text-center text-black text-2xl">
               Please follow the instructions below to connect scanner:
             </Text>
-            <Text
-              className="text-center text-black mt-4"
-              style={{ fontSize: isPortrait ? 20 : 18 }}
-            >
+            <Text className="text-center text-black mt-4 text-2xl">
               Settings {">"} Bluetooth {">"} Connect your Scanner
             </Text>
-            <Text
-              className="text-center text-black mt-4"
-              style={{ fontSize: isPortrait ? 20 : 18 }}
-            >
+            <Text className="text-center text-black mt-4 text-2xl">
               Make sure your scanner is turned on for it to be discoverable.
+            </Text>
+            <Text className="text-center text-black mt-4 text-2xl">
+              After connecting, please click the button below to begin scanning.
             </Text>
           </View>
         </View>
@@ -43,15 +35,10 @@ const ScanInstruction = () => {
             style={{ backgroundColor: colors.theme.green }}
             onPress={() => navigation.navigate("MicrochipScan")}
           >
-            <Text className="text-white font-semibold" style={{ fontSize: isPortrait ? 18 : 16 }}>
-              Start Scan
-            </Text>
+            <Text className="text-white font-semibold">Start Scan</Text>
           </TouchableOpacity>
 
-          <Text
-            className="text-center text-black mt-4 px-4"
-            style={{ fontSize: isPortrait ? 20 : 18 }}
-          >
+          <Text className="text-center text-black mt-4 px-4 text-2xl">
             You can scan multiple horses and they will be listed as you scan.
           </Text>
         </View>
