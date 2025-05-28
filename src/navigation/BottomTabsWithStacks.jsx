@@ -15,6 +15,7 @@ import Settings from "../screens/Settings";
 import { colors } from "../constants/ColorConstant";
 
 const screenHeaderOptions = {
+  headerShown: true,
   headerStyle: {
     backgroundColor: colors.theme.silver,
     height: Platform.OS === 'ios' ? 100 : 50
