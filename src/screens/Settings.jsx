@@ -1,5 +1,5 @@
-import React,{ useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, ActivityIndicator, Image } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -18,81 +18,75 @@ const InfoRow = ({ icon, text }) => (
 const Settings = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
-  
-  useEffect(() => {
-    const loadUserInfo = async () => {
-      try {
-        const parsedUserInfo = await getLoggedInUserInfo();
-        if (parsedUserInfo) {
-          parsedUserInfo.fullName = `${parsedUserInfo.firstName} ${parsedUserInfo.lastName}`;
-        }
-        setUserInfo(parsedUserInfo);
-      } catch (error) {
-        console.error('Failed to load user info:', error);
-      }
-    };
 
+  useEffect(() => {
     loadUserInfo();
   }, []);
 
+  const loadUserInfo = async () => {
+    try {
+      const parsedUserInfo = await getLoggedInUserInfo();
+      if (parsedUserInfo) {
+        parsedUserInfo.fullName = `${parsedUserInfo.firstName} ${parsedUserInfo.lastName}`;
+      }
+      setUserInfo(parsedUserInfo);
+    } catch (error) {
+      console.error('Failed to load user info:', error);
+    }
+  };
+
   const performLogout = async () => {
-    await AsyncStorage.setItem('isLoggedIn', 'false');
-    await AsyncStorage.removeItem('LoggedInUserInfo');
-  
+    await AsyncStorage.multiRemove(['isLoggedIn', 'LoggedInUserInfo']);
     navigation.reset({
       index: 0,
       routes: [{ name: 'Login' }],
     });
   };
 
-  const handleLogout = async() => {
-    try{
-      if (isLoading) return;
+  const handleLogout = async () => {
+    if (isLoading) return;
 
-      setIsLoading(true);
+    setIsLoading(true);
+    try {
       const response = await loginApi.get(URLConfig.LOGIN.Logout());
-      if (response && response.status === 200){
+
+      if (response?.status === 200) {
         await performLogout();
       }
-    }catch(error){
-      if (error.response && error.response.status === 401) {
+    } catch (error) {
+      if (error?.response?.status === 401) {
         await performLogout();
       } else {
-        Alert.alert("Logout Failed", "Something went wrong. Please try again.");
+        Alert.alert('Logout Failed', 'Something went wrong. Please try again.');
       }
-    }finally{
+    } finally {
       setIsLoading(false);
     }
-    
-  }
+  };
 
   return (
-      <View className="flex-1 bg-white relative">
+    <View className="flex-1 bg-white relative">
+      {isLoading && (
+        <View className="absolute inset-0 z-50 justify-center items-center bg-white/70">
+          <ActivityIndicator size="large" color={colors.theme.green} />
+        </View>
+      )}
 
-        {isLoading && (
-          <View className="absolute top-0 left-0 right-0 bottom-0 z-50 justify-center items-center bg-white/70">
-            <ActivityIndicator size="large" color={colors.theme.green} />
-          </View>
-        )}
-
-        {/* <View className="h-36 justify-center items-center mt-10">
-          <Image
-            source={require('../assets/user_default_profile_photo.png')}
-            className="w-36 h-36 rounded-full"
-          />
-        </View> */}
-  
       <View>
-        <InfoRow icon="user" text={userInfo ? userInfo.fullName : '-'} />
-        <InfoRow icon="mail" text={userInfo? userInfo.emailAddress : '-'} />
+        <InfoRow icon="user" text={userInfo?.fullName || '-'} />
+        <InfoRow icon="mail" text={userInfo?.emailAddress || '-'} />
       </View>
-  
-      <TouchableOpacity className="mt-8 px-12 py-3 rounded-full self-center"
-        style={{backgroundColor: colors.theme.green}}
-        onPress={handleLogout}>
+
+      <TouchableOpacity
+        className="mt-8 px-12 py-3 rounded-full self-center"
+        style={{ backgroundColor: colors.theme.green }}
+        onPress={handleLogout}
+        disabled={isLoading}
+      >
         <Text className="text-white text-center font-semibold">Logout</Text>
       </TouchableOpacity>
     </View>
-    );
-}
+  );
+};
+
 export default Settings;
