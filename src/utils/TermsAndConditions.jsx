@@ -31,7 +31,7 @@ const TermsAndConditions = ({ navigation }) => {
           className="rounded-full py-3 mt-6 self-center px-12"
           style={{backgroundColor: colors.theme.green}}
           onPress={() =>
-            navigation.navigate("Login", { screen: "Login" })
+            navigation.replace("Login")
           }
         >
           <Text className="text-white text-center font-bold text-lg">Accept & Continue</Text>

@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   ScrollView,
+  BackHandler
 } from "react-native";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 
@@ -14,6 +15,7 @@ import { colors } from "../constants/ColorConstant";
 import {
   convertUTCDateTimeToLocalDateTime,
   getAddressFromLatLong,
+  handleBack
 } from "../utils/helper";
 import { useNetwork } from "../hooks/useNetwork";
 import NoInternetScreen from "../utils/NoInternetScreen";
@@ -134,6 +136,10 @@ const HorseDetail = ({ route }) => {
   useFocusEffect(
     useCallback(() => {
       if (microchipNumber) getHorseDetails();
+
+      // Back handler to block back button
+      handleBack();
+      
     }, [microchipNumber])
   );
 

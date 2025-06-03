@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
+import { useFocusEffect } from "@react-navigation/native";
 import Icon from 'react-native-vector-icons/Feather';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { colors } from '../constants/ColorConstant';
 import URLConfig from '../constants/UrlConstant';
 import loginApi from '../utils/loginApi';
-import { getLoggedInUserInfo } from '../utils/helper';
+import { getLoggedInUserInfo, handleBack } from '../utils/helper';
 
 const InfoRow = ({ icon, text }) => (
   <View className="flex-row items-center border-b border-gray-200 py-9 px-6">
@@ -18,6 +19,12 @@ const InfoRow = ({ icon, text }) => (
 const Settings = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
+
+  useFocusEffect(
+    useCallback(() => {
+      handleBack();
+    }, [])
+  )
 
   useEffect(() => {
     loadUserInfo();

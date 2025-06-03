@@ -13,6 +13,7 @@ import {
   convertAndFormatUTCDateToLocalDate,
   formatDateToDDMMYYYY,
   getAddressFromLatLong,
+  handleBack
 } from "../utils/helper";
 
 const ScannedHorseHistory = () => {
@@ -84,6 +85,9 @@ const ScannedHorseHistory = () => {
       };
 
       fetchHistory();
+
+      handleBack();
+      
       return () => {
         isActive = false;
       };

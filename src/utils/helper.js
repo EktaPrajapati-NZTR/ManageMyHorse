@@ -1,3 +1,4 @@
+import { BackHandler } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
@@ -64,5 +65,15 @@ import { TOMTOM_API_KEY } from '../../appKeys';
       return null;
     }
   };
+
+  export const handleBack = () =>{
+     // Add back handler to block back button
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => true);
+
+    // Cleanup when unfocused or dependency changes
+    return () => {
+      backHandler.remove();
+    };
+  }
   
   
