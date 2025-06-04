@@ -27,12 +27,12 @@
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
-		<true/>
+		<false/>
 		<key>NSAllowsLocalNetworking</key>
-		<true/>
+		<false/>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>We need access to your location to track your horse's whereabouts.</string>
+	<string>We need access to your location to track your horse&apos;s whereabouts.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Ionicons.ttf</string>
