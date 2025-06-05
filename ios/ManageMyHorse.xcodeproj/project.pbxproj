@@ -267,6 +267,7 @@
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = ManageMyHorse/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "ID MY TB";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -305,6 +306,7 @@
 				DEVELOPMENT_TEAM = F5D778HSFV;
 				INFOPLIST_FILE = ManageMyHorse/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "ID MY TB";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
